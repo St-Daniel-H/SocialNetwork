@@ -6,17 +6,20 @@ function SignUp(){
    const [name,setName]=useState("");
    const [email,setEmail]=useState("");
    const [password,setPassword]=useState("");
+
+   
    async function registerUser (event){
     event.preventDefault();
    const response = await fetch('http://localhost:5000/api/register', {
+    
     method: "POST", 
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      name,
-      email,
-      password
+      name: name,
+      email: email,
+      password: password
     }),
    })
    const data = await response.json();
