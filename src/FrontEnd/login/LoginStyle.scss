@@ -1,0 +1,64 @@
+*{
+    margin:0;
+    padding:0;
+}
+.LoginPage{
+    display:flex;
+    margin:0;
+    padding:0;
+    min-width: 100vw;
+    min-height: 100vh;}
+#picture{
+    background-image: url(./src/FrontEnd/login/picture.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 70vw;
+    
+}
+form{
+    display:block;
+    h1{
+        margin-top:3rem;
+        margin-left:1rem;
+    }
+    #inputs{
+        margin:1rem;
+        margin-top:3rem;
+        .userInfo{
+            margin-top:3rem;
+        }
+        button{
+            margin-top:3rem;
+        }
+        .userInfo{
+             margin-top:2rem;
+           }
+    }
+}
+
+@media only screen and (max-width: 750px){
+   #picture{
+    display:none;
+ }
+   .LoginPage{
+    margin:0;
+    padding:0;
+    position: relative;
+
+
+}
+   form{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100vw;
+    min-height: 100vh;
+    margin:1rem;
+    background-color: White;
+    .userInfo{
+        display:block;
+       }
+   }
+}

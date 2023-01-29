@@ -1,11 +1,16 @@
-import express from "express";
-import cors from "cors";
-import users from "./api/users.route.js"
+import express from 'express';
+import cors from 'cors';
 const app = express();
-app.use(cors());
-app.use(express.json()); //so express can read json, no need for body-parser
 
-app.use("/api/v1/users",users);
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.post("/api/register", (req, res) => {;
+   console.log(req.body);
+   res.json({ status: "ok"});
+});
+
 
 app.use("*",(req,res)=>{
     res.status(404).json({

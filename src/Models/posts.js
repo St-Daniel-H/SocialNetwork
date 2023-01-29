@@ -1,13 +1,11 @@
 const mongoose = require("../database");
  
 // create an schema
-var userSchema = new mongoose.Schema({
-            name: String,
-            password: String,
-            email:String,
-            friendsIds:Array,
-            postsIds:Array
+var postSchema = new mongoose.Schema({
+        postsId:Number,
+        poster:Number,
+        comments: Array
         });
  
-var userModel=mongoose.model('Users',userSchema);
-module.exports = userModel;
+var postModel=mongoose.model('Post',postSchema);
+module.exports = postModel;

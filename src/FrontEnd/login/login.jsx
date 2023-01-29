@@ -1,7 +1,7 @@
-import './RegistrationStyle.scss'
+ import './LoginStyle.scss'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
-function login(){
+function Login(){
 
     return(
        <div className="LoginPage">
@@ -10,18 +10,18 @@ function login(){
           <form>
             <h1>Register Now!</h1>
             <div id="inputs">
-            <TextField
+           <div> <TextField
             className="userInfo" 
             id="standard-basic"  
             label="Email"  
             variant="standard"
             inputProps={{style: {fontSize: 30}}} 
             inputlabelprops={{style: {fontSize: 5}}}
-            />
-            <TextField className="userInfo" id="outlined-basic"  label="Password" variant="standard"
+            /></div>
+           <div><TextField className="userInfo" id="outlined-basic"  label="Password" variant="standard"
             type="password"
              inputProps={{style: {fontSize: 30}}} 
-             inputlabelprops={{style: {fontSize: 5}}} />
+             inputlabelprops={{style: {fontSize: 5}}} /></div> 
             <div><Button variant="contained"
             ><p>Log In</p></Button></div>
       
@@ -31,4 +31,4 @@ function login(){
         </div>
     )
 }
-export default login
+export default Login

@@ -2,10 +2,10 @@
 import app from "./server.js";
 import mongodb from "mongodb";
 import dotenv from "dotenv";
+
 dotenv.config({path:"./src/BackEnd/.env"});
 
 const MongoClient = mongodb.MongoClient;
-
 const port = process.env.PORT  || 8000;//if PORT can't be accessed
 
 MongoClient.connect(process.env.MONGOURI, {
