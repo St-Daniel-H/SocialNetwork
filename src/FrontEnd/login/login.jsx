@@ -1,34 +1,97 @@
- import './LoginStyle.scss'
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button'
-function Login(){
+import "./LoginStyle.scss";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import { useState } from "react";
 
-    return(
-       <div className="LoginPage">
-          <div id="picture">
+function Login() {
+  const [authenticated, setauthenticated] = useState(
+    localStorage.getItem(localStorage.getItem("authenticated") || false)
+  );
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function loginUser(event) {
+    event.preventDefault();
+    const response = await fetch("http://localhost:5000/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+  return (
+    <div className="LoginPage">
+      <div id="picture"></div>
+      <form onSubmit={loginUser}>
+        <div className="glitch-wrapper">
+          <div className="glitch" data-glitch="Login In">
+            Login In
           </div>
-          <form>
-            <h1>Register Now!</h1>
-            <div id="inputs">
-           <div> <TextField
-            className="userInfo" 
-            id="standard-basic"  
-            label="Email"  
-            variant="standard"
-            inputProps={{style: {fontSize: 30}}} 
-            inputlabelprops={{style: {fontSize: 5}}}
-            /></div>
-           <div><TextField className="userInfo" id="outlined-basic"  label="Password" variant="standard"
-            type="password"
-             inputProps={{style: {fontSize: 30}}} 
-             inputlabelprops={{style: {fontSize: 5}}} /></div> 
-            <div><Button variant="contained"
-            ><p>Log In</p></Button></div>
-      
-         <div> <Button id="NewAcc" variant="contained"><p>Create New Account</p></Button></div>
-          </div>
-          </form>
         </div>
-    )
+
+        <div id="inputs">
+          <div>
+            {" "}
+            <TextField
+              sx={{
+                "& .MuiInput-underline:before": { borderBottomColor: "white" },
+                "& .MuiFormLabel-root": {
+                  color: "white",
+                },
+              }}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              className="userInfo"
+              id="standard-basic"
+              label="Email"
+              variant="standard"
+              color="secondary"
+              inputProps={{ style: { fontSize: 30, color: "white" } }}
+              inputlabelprops={{ style: { fontSize: 5 } }}
+            />
+          </div>
+          <div>
+            <TextField
+              sx={{
+                "& .MuiInput-underline:before": { borderBottomColor: "white" },
+                "& .MuiFormLabel-root": {
+                  color: "white",
+                },
+              }}
+              onChange={(e) => setPassword(e.target.value)}
+              value={password}
+              color="secondary"
+              className="userInfo"
+              id="outlined-basic"
+              label="Password"
+              variant="standard"
+              type="password"
+              inputProps={{ style: { fontSize: 30, color: "white" } }}
+              inputlabelprops={{ style: { fontSize: 5 } }}
+            />
+          </div>
+          <div id="login">
+            <Button type="submit" id="loginButton">
+              <p>Log In</p>
+            </Button>
+          </div>
+          <hr />
+          <div id="signup">
+            <p>Don't have an account? Sign up!</p>
+            <a href="../signup"><Button id="signupButton">
+              <p>Create New Account</p>
+            </Button></a>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
 }
-export default Login
+export default Login;

@@ -3,13 +3,15 @@
     padding:0;
 }
 .LoginPage{
+   font-style: bold;
+
     display:flex;
     margin:0;
     padding:0;
     min-width: 100vw;
     min-height: 100vh;}
 #picture{
-    background-image: url(./src/FrontEnd/login/picture.png);
+    background-image: url(./src/FrontEnd/login/picture.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -17,24 +19,46 @@
     
 }
 form{
+   -webkit-box-shadow: -2px -1px 15px 7px rgba(0,0,0,0.5);
+   -moz-box-shadow: -3px -2px 30px 14px rgba(0,0,0,0.425);
+   box-shadow: -4px -3px 45px 21px rgba(0,0,0,0.35);
+   width:100%;
+    background-color: #222;
+    color:white;
     display:block;
-    h1{
-        margin-top:3rem;
-        margin-left:1rem;
-    }
     #inputs{
         margin:1rem;
         margin-top:3rem;
         .userInfo{
             margin-top:3rem;
+ 
         }
-        button{
-            margin-top:3rem;
+        #login{
+            margin-top:1rem;
         }
         .userInfo{
              margin-top:2rem;
            }
+           button {
+            background-color: #222; 
+            color: white; 
+            border: 2px solid purple;
+          }
+          button:hover {
+            background-color: purple;
+            color: white;
+          }
     }
+    hr{
+      margin-top:2rem;
+      height: 3px;
+      background-color: gray;
+      border: none;
+    }
+    #signup{
+      margin-top:2rem;
+    }
+
 }
 
 @media only screen and (max-width: 750px){
@@ -45,20 +69,84 @@ form{
     margin:0;
     padding:0;
     position: relative;
-
-
-}
-   form{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100vw;
-    min-height: 100vh;
-    margin:1rem;
-    background-color: White;
-    .userInfo{
-        display:block;
+    background-color: #222;
+    form{
+        background-color: #222;
+    
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-width: 100vw;
+        min-height: 100vh;
+        margin:1rem;
+        .userInfo{
+            display:block;
+          
+           }
+            
+           }
        }
-   }
+
 }
+.glitch-wrapper {
+  margin:1rem;
+ }
+ 
+ .glitch {
+    position: relative;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #fff;
+    letter-spacing: 5px;
+    z-index: 1;
+ }
+ 
+ .glitch:before,
+ .glitch:after {
+    display: block;
+    content: attr(data-glitch);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.8;
+ }
+ 
+ .glitch:before {
+    animation: glitch-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    color: #00ffff;
+    z-index: -1;
+ }
+ 
+ .glitch:after {
+    animation: glitch-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+    color: #ff00ff;
+    z-index: -2;
+ }
+ 
+ @keyframes glitch-color {
+    0% {
+       transform: translate(0);
+    }
+ 
+    20% {
+       transform: translate(-3px, 3px);
+    }
+ 
+    40% {
+       transform: translate(-3px, -3px);
+    }
+ 
+    60% {
+       transform: translate(3px, 3px);
+    }
+ 
+    80% {
+       transform: translate(3px, -3px);
+    }
+ 
+    to {
+       transform: translate(0);
+    }
+ }
