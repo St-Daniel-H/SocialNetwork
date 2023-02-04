@@ -6,7 +6,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 import mongoose from "mongoose";
 import userModel from "./Models/userModel.js";
-import { Navigate } from "react-router-dom";
+import jwt from 'jsonwebtoken'
 
 app.post("/api/register", async (req, res) => {
   try {
@@ -28,12 +28,18 @@ app.post("/api/login", async (req, res) => {
 
   const account = await userModel.findOne({email: email, password: password});
   if (account) {
+    const token = jwt.sign(
+      {
+        email:req.body.email
+      },
+      'secret123'
+    )
     res.json({
-        status: "Ok",
+        status: "Ok",user:token
       });
      }else{
       res.json({
-        status: "Failed"
+        status: "Failed",user:false
       })
      }
   

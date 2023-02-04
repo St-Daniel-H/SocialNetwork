@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useState,useHistory } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Navigate } from "react-router-dom";
-
+// import { useHistory } from "react-router-dom"
 import './SignUpSt.scss';
+import userModel from '../../BackEnd/Models/userModel';
+import { AltRoute } from '@mui/icons-material';
 function SignUp(){
+   const history = useHistory();
    const [name,setName]=useState("");
    const [email,setEmail]=useState("");
    const [password,setPassword]=useState("");
@@ -25,7 +28,10 @@ function SignUp(){
     }),
    })
    const data = await response.json();
-   console.log(data); 
+   console.log(data);
+   if(data.status == "Ok"){
+    history.push("./login")
+   } 
    }
     return(
       <div className="LoginPage">

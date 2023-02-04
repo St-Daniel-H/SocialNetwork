@@ -2,6 +2,7 @@ import "./LoginStyle.scss";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { useState } from "react";
+import { AltRoute } from "@mui/icons-material";
 
 function Login() {
   const [authenticated, setauthenticated] = useState(
@@ -24,6 +25,12 @@ function Login() {
       }),
     });
     const data = await response.json();
+    if(data.user){
+      alert('Login Successful');
+      window.location.href="./home"
+    }else{
+      alert('Please check your email and password')
+    }
     console.log(data);
   }
   return (
