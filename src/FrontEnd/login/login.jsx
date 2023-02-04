@@ -5,9 +5,7 @@ import { useState } from "react";
 import { AltRoute } from "@mui/icons-material";
 
 function Login() {
-  const [authenticated, setauthenticated] = useState(
-    localStorage.getItem(localStorage.getItem("authenticated") || false)
-  );
+ 
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,8 +24,9 @@ function Login() {
     });
     const data = await response.json();
     if(data.user){
+      localStorage.setItem("token",data.user);
       alert('Login Successful');
-      window.location.href="./home"
+      window.location.href="/home"
     }else{
       alert('Please check your email and password')
     }

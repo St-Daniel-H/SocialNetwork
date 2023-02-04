@@ -1,16 +1,18 @@
-import { useState,useHistory } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom'
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Navigate } from "react-router-dom";
-// import { useHistory } from "react-router-dom"
+// import {  } from "react-router-dom"
 import './SignUpSt.scss';
 import userModel from '../../BackEnd/Models/userModel';
 import { AltRoute } from '@mui/icons-material';
 function SignUp(){
-   const history = useHistory();
-   const [name,setName]=useState("");
+     const [name,setName]=useState("");
    const [email,setEmail]=useState("");
    const [password,setPassword]=useState("");
+   const navigateTo = useNavigate();
+
 
    
    async function registerUser (event){
@@ -30,8 +32,10 @@ function SignUp(){
    const data = await response.json();
    console.log(data);
    if(data.status == "Ok"){
-    history.push("./login")
-   } 
+    navigateTo("/login")
+   }else{
+    alert('Error, duplicated email')
+   }
    }
     return(
       <div className="LoginPage">

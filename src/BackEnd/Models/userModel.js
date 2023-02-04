@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'; 
 // create an schema
 const User = new mongoose.Schema({
-            id: Number,
+            id: String,
             name: {
                 type:String,
                 required: true
@@ -14,6 +14,9 @@ const User = new mongoose.Schema({
                 type:String,
                 required: true,
                 unique: true
+            },
+            bio:{
+                type:String
             },
             friendsIds:Array,
             postsIds:Array
