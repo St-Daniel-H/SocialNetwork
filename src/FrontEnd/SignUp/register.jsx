@@ -39,6 +39,7 @@ function SignUp(){
    }
     return(
       <div className="LoginPage">
+        
       <div id="picture">
       </div>
       <form onSubmit={registerUser}>

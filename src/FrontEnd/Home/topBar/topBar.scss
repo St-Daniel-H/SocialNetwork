@@ -1,0 +1,71 @@
+.topBarPage{
+    background-color: #151515;
+    color:#ffffff;
+    .toolcase{
+      transition-duration: 0.5s;
+      &:hover{
+        color:#9c27b0;
+        cursor: pointer;
+      }
+    }
+  }
+  //topBar---
+  #topBar{
+    width:100vw;
+    display:flex;
+    height:80px;
+    background-color: #11111169;
+    align-items: center;
+    align-content: space-between;
+    #profile{
+      display:flex;
+    }
+      #searchBar{
+        background-color: #11111169;
+        border: solid 2px #9c27b0;
+        width: 300px;
+        height: 44px;
+        border-radius: 5px;
+        display:flex;
+        flex-direction:row;
+        align-items:center;
+      
+      input {
+        all: unset;
+        font: 16px system-ui;
+        height: 100%;
+        width: 100%;
+        padding: 6px 10px;
+      }
+      
+      ::placeholder {
+        color: #fff;
+        opacity: 0.7; 
+      }
+      
+      svg {
+        color: #fff;
+        fill: #9c27b0;
+        width: 24px;
+        height: 24px;
+        padding: 10px;
+      }
+      .toolcase {
+        :hover{
+          cursor:pointer;
+          color:#9c27b0
+        }
+       
+      }
+      button {
+        all: unset;
+        cursor: pointer;
+        width: 44px;
+        height: 44px;
+      }
+    }
+    #tools{
+      display:flex;
+      float:right;
+    }
+  }

@@ -1,6 +1,9 @@
 import { useState,useEffect,useHistory} from "react";
 import jwt_decode from "jwt-decode";
 import './HomeStyle.scss';
+import TopBar from './topBar/topBar'
+import TabPanel from "./topBar/tabView";
+
 const homePage = () => {
   const [name,setName] = useState('');
   const [tempName,setTempName] = useState('');
@@ -59,18 +62,18 @@ const homePage = () => {
       alert("error: " + data.error);
     }
   }
- 
-
-
-
   return (
-    <div>
-      <form onSubmit={updateName}>
-        <input type="text" value={tempName} onChange={(e) =>{setTempName(e.target.value)}}/>
-        <button type="submit">Submit</button>
-      </form>
-     <div> <h1>Name:{name || 'no name found'}</h1></div>
+    <div className="homePage">
+      <TopBar/>
+       {/* tab links */}
+       <TabPanel />
+        {/*end of tab content */}
     </div>
   );
 };
 export default homePage;
+      {/* <form onSubmit={updateName}>
+        <input type="text" value={tempName} onChange={(e) =>{setTempName(e.target.value)}}/>
+        <button type="submit">Submit</button>
+      </form>
+     <div> <h1>Name:{name || 'no name found'}</h1></div> */}
