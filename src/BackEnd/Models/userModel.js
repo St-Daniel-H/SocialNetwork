@@ -15,9 +15,14 @@ const User = new mongoose.Schema({
                 required: true,
                 unique: true
             },
-            bio:{
-                type:String
-            },
+            bio: {
+                type: String,
+                default: ""
+              },
+              picture: {
+                type: String,
+                default: "default_profile_picture.png"
+              },
             friendsIds:Array,
             postsIds:Array
         },

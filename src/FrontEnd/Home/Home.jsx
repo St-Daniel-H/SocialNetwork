@@ -1,7 +1,7 @@
 import { useState,useEffect,useHistory} from "react";
 import jwt_decode from "jwt-decode";
 import './HomeStyle.scss';
-import TopBar from './topBar/topBar'
+// import TopBar from './topBar/topBar'
 import * as React from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
@@ -13,12 +13,13 @@ import PhotoIcon from '@mui/icons-material/Photo';
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import MessageIcon from "@mui/icons-material/Message";
-import logo from "./pictures/logo.png";
+import logo from "../pictures/logo.png";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SettingsIcon from '@mui/icons-material/Settings';
+import {useSelector } from 'react-redux';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -51,69 +52,75 @@ function a11yProps(index) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
+
+
 const homePage = () => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const [name,setName] = useState('');
-  const [tempName,setTempName] = useState('');
-  async function populateHome() {
-    const req = await fetch("http://localhost:5000/api/home", {
-      headers:{
-        "x-access-token": localStorage.getItem('token'),
-      }
-   
-    });
-    const data = await req.json();
-    console.log("data: " + data.name);
-    if(data.status === 'Ok'){
-      setName(data.name);
-    }else{
-      alert(data.error);
-    }
-  }
+
+  const name = useSelector((state)=>state.user.user_name);
+  const profilePicture = useSelector((state)=>state.user.profile_picture)
+  // const [name,setName] = useState('');
+  // // const [tempName,setTempName] = useState('');
   
-    useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const user = jwt_decode(token);
-        console.log(user);
-        if (!user) {
-          localStorage.remove('token');
-          history.replace("./login");
-        } else {
-          populateHome();
-        }
-      }
+  // async function populateHome() {
+  //   const req = await fetch("http://localhost:5000/api/home", {
+  //     headers:{
+  //       "x-access-token": localStorage.getItem('token'),
+  //     }
+   
+  //   });
+  //   const data = await req.json();
+  //   console.log("data: " + data.name);
+  //   if(data.status === 'Ok'){
+  //     setName(data.name);
+  //   }else{
+  //     alert(data.error);
+  //   }
+  // }
+  
+  //   useEffect(() => {
+  //     const token = localStorage.getItem('token');
+  //     if (token) {
+  //       const user = jwt_decode(token);
+  //       console.log(user);
+  //       if (!user) {
+  //         localStorage.remove('token');
+  //         history.replace("./login");
+  //       } else {
+  //         populateHome();
+  //       }
+  //     }
      
-    }, []);
-    async function updateName(event) {
-      event.preventDefault();
-    const req = await fetch("http://localhost:5000/api/home", {
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json',
-        "x-access-token": localStorage.getItem('token'),
-      },
-      body: JSON.stringify({
-         name: tempName,
-         status:"wat the fuck"
-      })
+  //   }, []);
+  //   async function updateName(event) {
+  //     event.preventDefault();
+  //   const req = await fetch("http://localhost:5000/api/home", {
+  //     method: 'POST',
+  //     headers:{
+  //       'Content-Type': 'application/json',
+  //       "x-access-token": localStorage.getItem('token'),
+  //     },
+  //     body: JSON.stringify({
+  //        name: tempName,
+  //        status:"wat the fuck"
+  //     })
       
-    });
-    console.log(tempName);
-    const data = await req.json();
-    console.log("data: "+data);
-    if(data.status == "Ok"){
-      setName(tempName);
-      setTempName('');
+  //   });
+  //   console.log(tempName);
+  //   const data = await req.json();
+  //   console.log("data: "+data);
+  //   if(data.status == "Ok"){
+  //     setName(tempName);
+  //     setTempName('');
       
-    }else{
-      alert("error: " + data.error);
-    }
-  }
+  //   }else{
+  //     alert("error: " + data.error);
+  //   }
+  // }
   // For mobile 3 dots menu
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -124,6 +131,7 @@ const homePage = () => {
     setAnchorEl(null);
   };
   //end for mobile 3 dots menu
+  console.log(profilePicture)
   return (
     <div className="homePage">
       {/* top bar */}
@@ -167,7 +175,7 @@ const homePage = () => {
       </div>
       <div id="topBarRight">
         <div id="profile">
-          <img></img>
+          <img src="profilePicture"></img>
           <p>{name || 'no name found'}</p>
         </div>
         <div id="tools">

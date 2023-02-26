@@ -35,7 +35,7 @@ function Login() {
   return (
     <div className="LoginPage">
       <div id="picture"></div>
-      <form onSubmit={loginUser}>
+      <form className="signup-loginform" onSubmit={loginUser}>
         <div className="glitch-wrapper">
           <div className="glitch" data-glitch="Login In">
             Login In

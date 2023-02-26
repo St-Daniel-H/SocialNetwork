@@ -42,7 +42,7 @@ function SignUp(){
         
       <div id="picture">
       </div>
-      <form onSubmit={registerUser}>
+      <form className="signup-loginform" onSubmit={registerUser}>
         <div className="glitch-wrapper">
         <div className="glitch" data-glitch="SignUp ">Sign Up!</div>
 

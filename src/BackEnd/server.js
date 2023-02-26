@@ -7,7 +7,6 @@ app.use(express.json());
 import mongoose from "mongoose";
 import userModel from "./Models/userModel.js";
 import jwt from 'jsonwebtoken'
-
 app.post("/api/register", async (req, res) => {
   try {
     await userModel.create({
@@ -55,7 +54,8 @@ app.get("/api/home", async (req, res) => {
     console.log(user);
     return res.json({
       status:"Ok",
-      name: user.name
+      name: user.name,
+      picture:user.picture
     })
   }
   catch(error){

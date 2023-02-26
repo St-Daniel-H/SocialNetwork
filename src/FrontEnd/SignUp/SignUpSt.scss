@@ -16,7 +16,7 @@
   width: 70%;
   
 }
-form{
+.signup-loginform{
   max-width:30%;
   min-height:100vh;
   #inputs{
@@ -43,7 +43,7 @@ form{
   .LoginPage{
    margin:0;
    padding:0;
-   form{
+   signup-loginform{
     min-height:600px;
     //position: fixed;
     top: 50%;
