@@ -1,9 +1,4 @@
-function userWidget(){
-
-    return(
-        <div>
-
-        </div>
-    )
+function userWidget() {
+  return <div></div>;
 }
 export default userWidget;
