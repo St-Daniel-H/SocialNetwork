@@ -20,6 +20,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SettingsIcon from '@mui/icons-material/Settings';
 import {useSelector } from 'react-redux';
+import { redirect } from "react-router-dom";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -82,20 +84,21 @@ const homePage = () => {
   //   }
   // }
   
-  //   useEffect(() => {
-  //     const token = localStorage.getItem('token');
-  //     if (token) {
-  //       const user = jwt_decode(token);
-  //       console.log(user);
-  //       if (!user) {
-  //         localStorage.remove('token');
-  //         history.replace("./login");
-  //       } else {
-  //         populateHome();
-  //       }
-  //     }
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const user = jwt_decode(token);
+        console.log(user);
+        if (!user) {
+          localStorage.remove('token');
+          location.replace('./login')
+        }
+      }else{
+        console.log("I am redirected!")
+        location.replace('./login')
+      }
      
-  //   }, []);
+    }, []);
   //   async function updateName(event) {
   //     event.preventDefault();
   //   const req = await fetch("http://localhost:5000/api/home", {

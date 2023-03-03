@@ -26,6 +26,7 @@ const User = new mongoose.Schema({
             friendsIds:Array,
             postsIds:Array
         },
+        {timestamps:true},
         {collection: 'userData'});
  
 var userModel=mongoose.model('User',User);

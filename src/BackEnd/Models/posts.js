@@ -1,14 +1,12 @@
-const mongoose = require("mongoose");
+import  Timestamp   from "mongodb"
+import  mongoose from "mongoose";
  
 // create an schema
 var postSchema = new mongoose.Schema(
   {
-    postsId: {
-      type: Number,
-      required: true,
-    },
+    id: String,
     posterId: {
-      type: Number,
+      type: String,
       required: true,
     },
     comments: Array,
@@ -19,10 +17,14 @@ var postSchema = new mongoose.Schema(
     summary:{
         type:String,
         required:true
-    } 
+    },
+    cover:{
+      type: String
+    }
   },
+  {timestamp:true},
   { collection: "postsData" }
 );
  
 var postModel=mongoose.model('Post',postSchema);
-module.exports = postModel;
+export default postModel

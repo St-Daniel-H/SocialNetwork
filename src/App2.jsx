@@ -22,7 +22,13 @@ function Apps() {
     const data = await req.json();
     console.log("data: " + data.name);
     if(data.status === 'Ok'){
-      dispatch({type:getUserData, name:data.name,picture:data.picture})
+      dispatch({type:getUserData,
+         name:data.name,
+         picture:data.picture,
+         id:data.id,
+         bio:data.bio,
+         email:data.email
+        })
     }else{
       alert(data.error);
     }
