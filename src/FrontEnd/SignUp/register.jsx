@@ -58,7 +58,7 @@ function SignUp() {
             label="Name"
             variant="standard"
             color="secondary"
-            inputProps={{ style: { fontSize: 30 } }}
+            inputProps={{ style: { fontSize: 30, color: "white" } }}
             inputlabelprops={{ style: { fontSize: 5 } }}
             required
           />
@@ -76,7 +76,7 @@ function SignUp() {
             label="Email"
             variant="standard"
             color="secondary"
-            inputProps={{ style: { fontSize: 30 } }}
+            inputProps={{ style: { fontSize: 30, color: "white" } }}
             inputlabelprops={{ style: { fontSize: 5 } }}
             required
           />

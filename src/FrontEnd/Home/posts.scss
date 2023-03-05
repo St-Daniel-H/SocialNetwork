@@ -1,0 +1,104 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+#postCard{
+    -webkit-box-shadow: -2px -1px 15px 7px rgba(0,0,0,0.5);
+    -moz-box-shadow: -3px -2px 30px 14px rgba(0,0,0,0.425);
+    box-shadow: -4px -3px 45px 21px rgba(0,0,0,0.35);
+    max-width:400px;
+    background-color: #222;
+    border: 1px solid  #9c27b0;
+    margin:  auto ;
+    #title,#Summary{
+        margin-left:5px;
+        margin-top:10px;
+
+    }
+    #postUserInfo{
+        height:70px;
+        display:flex;
+        width:100%;
+        background-color: #1a1919;
+        border-bottom:4px solid #100f0f;
+        padding-top:10px;
+        text-decoration: none;
+        a{
+            text-decoration: none;
+            color:white;
+        }
+        #posterNameAndDate{
+            margin-top:10px;
+            margin-left:20px;
+            text-decoration: none;
+        }
+        #PosterImage{
+            margin-left:10px;
+            width:50px;
+            height:50px;
+            border-radius:50%;
+        }
+        #postDate{
+            color:rgba(162, 162, 162, 0.674);
+            font-size:14px;
+            font-style:italic;
+        }
+    }
+    #image{
+        margin: 0;
+        padding: 0;
+        height:300px;
+        img{
+            width: 100%;
+            height: 300px;
+        }
+      
+    }
+    #buttons{
+        display:flex;
+       background-color:#1a1919;
+       height:35px;
+       border-top:5px solid #100f0f;
+        .postButtons{
+            border:none;
+            color:white;
+            transition: 0.3s;
+
+        }
+        #like{
+            width:70%;
+            display:flex;
+            align-content: space-between;
+            align-items: center;
+            #likeButton{
+                height:35px;
+                width:100px;
+            }
+            button{
+                :hover{
+                    cursor:pointer;
+                    color:#9c27b0
+                  }
+            }
+        }
+        #comment{
+            width:30%;
+            float:right;
+            display:flex;
+            align-content: space-between;
+            align-items: center;
+            margin-right:2rem;
+            #commentsButton{
+                height:35px;
+                width:100px;
+            }
+            button{
+                color:white;
+                :hover{
+                    cursor:pointer;
+                    color:#9c27b0
+                  }
+            }
+        }
+    }
+}

@@ -24,7 +24,7 @@ function Login() {
     if (data.user) {
       localStorage.setItem("token", data.user);
       alert("Login Successful");
-      window.location.href = "/home";
+      window.location.href = "/";
     } else {
       alert("Please check your email and password");
     }

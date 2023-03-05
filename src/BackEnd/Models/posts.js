@@ -21,8 +21,9 @@ var postSchema = new mongoose.Schema(
     cover: {
       type: String,
     },
+    likes: Array,
   },
-  { timestamp: true },
+  { timestamps: true },
   { collection: "postsData" }
 );
 

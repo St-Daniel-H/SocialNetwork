@@ -21,7 +21,10 @@ import MenuItem from "@mui/material/MenuItem";
 import SettingsIcon from "@mui/icons-material/Settings";
 import { useSelector } from "react-redux";
 import { redirect } from "react-router-dom";
-
+import UserWidget from "./userWidget";
+import Posts from "./posts";
+import OnlineFriendsWidget from "./onlineFriends";
+import userDefaultImage from "./default_profile_picture.png";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -133,6 +136,18 @@ const homePage = () => {
   };
   //end for mobile 3 dots menu
   console.log(profilePicture);
+
+  //Get all the posts:
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/posts").then((response) => {
+      response.json().then((post) => {
+        setPosts(post);
+        console.log("posts:" + posts);
+      });
+    });
+  }, []);
+
   return (
     <div className="homePage">
       {/* top bar */}
@@ -176,7 +191,7 @@ const homePage = () => {
           </div>
           <div id="topBarRight">
             <div id="profile">
-              <img src="profilePicture"></img>
+              <img id="userImageAtTopBar" src={userDefaultImage}></img>
               <p>{name || "no name found"}</p>
             </div>
             <div id="tools">
@@ -231,7 +246,7 @@ const homePage = () => {
         <div id="topBarMidForPhone">
           <Box
             id="topBoxMidForPhone"
-            sx={{ borderBottom: 1, borderColor: "divider" }}
+            sx={{ borderBottom: 0, borderColor: "divider" }}
           >
             <Tabs
               value={value}
@@ -240,23 +255,40 @@ const homePage = () => {
               indicatorColor="secondary"
               aria-label="secondary tabs example"
             >
-              <Tab label={<HomeIcon />} {...a11yProps(0)} />
-              <Tab label={<PhotoIcon />} {...a11yProps(1)} />
+              <Tab
+                label={<HomeIcon sx={{ width: 20, height: 20 }} />}
+                {...a11yProps(0)}
+              />
+              <Tab
+                label={<PhotoIcon sx={{ width: 20, height: 20 }} />}
+                {...a11yProps(1)}
+              />
             </Tabs>
           </Box>
         </div>
       </div>
       {/* end of top bar */}
-      <Box sx={{ width: "100%" }}>
-        <TabPanel value={value} index={0}>
-          item one
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel>
-      </Box>
-      {/* tab links */}
-      {/*end of tab content */}
+      <div id="homeBody">
+        <UserWidget id="userWidget" className="Widget" />
+        <Box sx={{ width: "100%" }}>
+          <TabPanel value={value} index={0}>
+            <ul style={{ listStyle: "none" }}>
+              {posts.length > 0 &&
+                posts.map((post) => (
+                  <li key={post._id}>
+                    <Posts {...post} />
+                    <br />
+                  </li>
+                ))}
+            </ul>
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            Item Two
+          </TabPanel>
+        </Box>
+        <OnlineFriendsWidget className="Widget" />
+        {/* tab links */}
+      </div>
     </div>
   );
 };

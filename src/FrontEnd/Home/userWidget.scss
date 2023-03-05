@@ -1,0 +1,22 @@
+#userWidget{
+    margin-top:20px;
+    width:200px;
+    height:200px;
+    border: 1px solid #9c27b0;
+    margin:30px;
+
+    #userInfo{
+        margin-top:10px;
+        display:flex;
+        #userNameAndBio{
+            margin-left:10px;
+        }
+    }
+    #userWidgetImage{
+        border-radius: 50%;
+
+    }
+    @media only screen and (max-width: 650px){
+        display:none;
+        }
+}

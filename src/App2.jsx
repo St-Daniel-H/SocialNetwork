@@ -2,6 +2,7 @@ import { Router, Route, Routes } from "react-router-dom";
 import Login from "./FrontEnd/login/login";
 import SignUp from "./FrontEnd/SignUp/register";
 import Home from "./FrontEnd/Home/Home";
+import UserProfile from "./FrontEnd/userProfile/userProfile";
 // import TopBar from "./FrontEnd/Home/topBar/topBar";
 import CreatePost from "./FrontEnd/createPost/createPost";
 import Test from "./FrontEnd/testingRedux";
@@ -53,9 +54,10 @@ function Apps() {
         <Route path="/login" element={<Login />} />
         <Route path="/createPost" element={<CreatePost />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         {/* <Route path="/topbar" element={<TopBar />} /> */}
         <Route path="/test" element={<Test />} />
+        <Route path="/user/:id" element={<UserProfile />} />
       </Routes>
     </div>
   );

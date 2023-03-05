@@ -20,6 +20,7 @@ function CreatePost() {
       method: "POST",
       body: data,
     });
+    window.location.href = "/";
   }
   return (
     <form onSubmit={createNewPost} id="CreatePost">
@@ -43,6 +44,7 @@ function CreatePost() {
           onChange={(ev) => setFile(ev.target.files)}
           placeholder="Image"
           type="file"
+          accept="image/x-png,image/gif,image/jpeg"
         ></input>
 
         <button type="submit" onClick={createNewPost}>
