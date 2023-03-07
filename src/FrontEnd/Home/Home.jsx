@@ -275,8 +275,8 @@ const homePage = () => {
             <ul style={{ listStyle: "none" }}>
               {posts.length > 0 &&
                 posts.map((post) => (
-                  <li>
-                    <Posts key={post._id} {...post} userId={userId} />
+                  <li key={post._id}>
+                    <Posts {...post} userId={userId} />
                     <br />
                   </li>
                 ))}
