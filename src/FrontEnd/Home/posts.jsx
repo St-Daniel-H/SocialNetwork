@@ -89,7 +89,7 @@ function Posts({
   useEffect(() => {
     getUserNameAndImage();
     checkIfUserLikedImage();
-  }, []);
+  }, [likes, userId]);
   async function checkIfUserLikedImage() {
     const req = await fetch("http://localhost:5000/api/getPostLikes", {
       method: "POST",
