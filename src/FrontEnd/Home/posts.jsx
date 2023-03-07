@@ -24,16 +24,16 @@ function Posts({
 }) {
   console.log("user id is that was imported from home: " + userId);
   //const userId = useSelector((state) => state.user.user_id);
-  const [likesCount, setLikesCount] = useState(likes.length);
-  const [selected, setSelected] = useState();
-  console.log(likes);
+  const [postLikes, setPostLikes] = useState([...likes]);
+  const [likesCount, setLikesCount] = useState(postLikes.length);
+  const [selected, setSelected] = useState(postLikes.includes(userId));
+  console.log();
   const [name, setName] = useState("Unavailable");
   const [image, setImage] = useState("");
   const [commentsButton, setCommentsButton] = useState(false);
 
   //for like button
   async function addRemoveLike() {
-    console.log(likesCount);
     try {
       if (selected) {
         setLikesCount(likesCount - 1);
@@ -61,7 +61,6 @@ function Posts({
         });
       }
     } catch (error) {
-      setIsLoading(false);
       console.log(error);
     }
   }
@@ -90,13 +89,27 @@ function Posts({
   useEffect(() => {
     getUserNameAndImage();
     checkIfUserLikedImage();
-  }, [userId, likes]);
-  function checkIfUserLikedImage() {
-    console.log("likes array " + likes);
-    console.log("user id " + userId);
-    console.log(selected);
-    console.log(likes.includes(userId) + " result");
-    if (likes.includes(userId)) {
+  }, []);
+  async function checkIfUserLikedImage() {
+    const req = await fetch("http://localhost:5000/api/getPostLikes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        postId: _id,
+      }),
+    });
+    const postLikes = await req.json();
+    console.log("from backend" + postLikes);
+    if (postLikes.status === "Ok") {
+      setPostLikes([...postLikes.likes]);
+    } else {
+      alert(data.error);
+    }
+    setLikesCount(postLikes.likes.length);
+
+    if (postLikes.likes.includes(userId)) {
       setSelected(true);
       console.log("toggle is true: " + selected);
     } else {

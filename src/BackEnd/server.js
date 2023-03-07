@@ -169,8 +169,13 @@ app.post("/post/like", async (req, res) => {
   }
 });
 //get likes
-app.post("api/getPostLikes", async (req, res) => {
-  res.json(await postModel.findById().likes);
+app.post("/api/getPostLikes", async (req, res) => {
+  const likes = await postModel.findById(req.body.postId);
+  console.log("from backend" + likes.likes);
+  res.json({
+    likes: likes.likes,
+    status: "Ok",
+  });
 });
 app.use("*", (req, res) => {
   res.status(404).json({
