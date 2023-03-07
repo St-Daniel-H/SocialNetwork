@@ -66,6 +66,7 @@ const homePage = () => {
   };
 
   const name = useSelector((state) => state.user.user_name);
+  const userId = useSelector((state) => state.user.user_id);
   const profilePicture = useSelector((state) => state.user.profile_picture);
   // const [name,setName] = useState('');
   // // const [tempName,setTempName] = useState('');
@@ -85,6 +86,7 @@ const homePage = () => {
   //     alert(data.error);
   //   }
   // }
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -99,6 +101,13 @@ const homePage = () => {
       console.log("I am redirected!");
       location.replace("./login");
     }
+    //getallposts
+    fetch("http://localhost:5000/posts").then((response) => {
+      response.json().then((post) => {
+        setPosts(post);
+      });
+    });
+    console.log("posts:" + posts);
   }, []);
   //   async function updateName(event) {
   //     event.preventDefault();
@@ -138,15 +147,6 @@ const homePage = () => {
   console.log(profilePicture);
 
   //Get all the posts:
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    fetch("http://localhost:5000/posts").then((response) => {
-      response.json().then((post) => {
-        setPosts(post);
-        console.log("posts:" + posts);
-      });
-    });
-  }, []);
 
   return (
     <div className="homePage">
@@ -275,8 +275,8 @@ const homePage = () => {
             <ul style={{ listStyle: "none" }}>
               {posts.length > 0 &&
                 posts.map((post) => (
-                  <li key={post._id}>
-                    <Posts {...post} />
+                  <li>
+                    <Posts key={post._id} {...post} userId={userId} />
                     <br />
                   </li>
                 ))}

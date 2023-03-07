@@ -20,7 +20,6 @@ app.post("/api/register", async (req, res) => {
   } catch (err) {
     res.json({ status: "error, duplicate email!" });
   }
-  console.log(req.body);
 });
 app.post("/api/login", async (req, res) => {
   const email = req.body.email;
@@ -74,7 +73,6 @@ app.post("/api/home", async (req, res) => {
   try {
     const decoded = jwt.verify(token, "secret123");
     const id = decoded.id;
-    console.log("id:" + id);
     await userModel.findOneAndUpdate({ _id: id }, { name: req.body.name });
     return res.json({ status: "Ok" });
   } catch (error) {
@@ -124,7 +122,6 @@ app.get("/posts", async (req, res) => {
 
 app.post("/api/FindUserId", async (req, res) => {
   const id = req.body.id;
-  console.log("id:" + id);
   try {
     const user = await userModel.findById(id);
     console.log("this is the user" + user);
@@ -149,8 +146,6 @@ app.post("/api/FindUserId", async (req, res) => {
 app.post("/post/dislike", async (req, res) => {
   const userId = req.body.userId;
   const postId = req.body.postId;
-  console.log("i disliked");
-
   try {
     const post = await postModel.findOneAndUpdate(
       { _id: postId },
@@ -164,15 +159,18 @@ app.post("/post/dislike", async (req, res) => {
 app.post("/post/like", async (req, res) => {
   const userId = req.body.userId;
   const postId = req.body.postId;
-  console.log("i liked");
   try {
-    const post = await postModel.findOneAndUpdate(
+    const post = await postModel.findByIdAndUpdate(
       { _id: postId },
-      { $push: { likes: userId } }
+      { $addToSet: { likes: userId } }
     );
   } catch (error) {
     console.log(error);
   }
+});
+//get likes
+app.post("api/getPostLikes", async (req, res) => {
+  res.json(await postModel.findById().likes);
 });
 app.use("*", (req, res) => {
   res.status(404).json({

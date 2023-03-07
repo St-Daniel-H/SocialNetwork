@@ -20,58 +20,57 @@ function Posts({
   createdAt,
   likes,
   comments,
+  userId,
 }) {
+  console.log("user id is that was imported from home: " + userId);
+  //const userId = useSelector((state) => state.user.user_id);
   const [likesCount, setLikesCount] = useState(likes.length);
-  const [selected, setSelected] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [selected, setSelected] = useState();
+  console.log(likes);
   console.log("hi");
   const [name, setName] = useState("Unavailable");
   const [image, setImage] = useState("");
-  const userId = useSelector((state) => state.user.user_id);
+  console.log("iser id" + userId);
   //for like button
   async function addRemoveLike() {
-    if (selected) {
-      setLikesCount(likesCount - 1);
-      const req = await fetch("http://localhost:5000/post/dislike", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          postId: _id,
-        }),
-      });
-    } else {
-      setLikesCount(likesCount + 1);
-      const req = await fetch("http://localhost:5000/post/like", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: userId,
-          postId: _id,
-        }),
-      });
+    setIsLoading(true);
+    try {
+      if (selected) {
+        setLikesCount(likesCount - 1);
+        const req = await fetch("http://localhost:5000/post/dislike", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userId,
+            postId: _id,
+          }),
+        });
+      } else {
+        setLikesCount(likesCount + 1);
+        const req = await fetch("http://localhost:5000/post/like", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: userId,
+            postId: _id,
+          }),
+        });
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
     }
   }
   //ent for likes
   //for comments
-  const [selectedcomments, setselectedcomments] = useState(false);
   //end for comments
-  useEffect(() => {
-    getUserNameAndImage();
-    console.log(userId);
-    console.log("likes at " + likes[0]);
-    console.log(likes.includes(userId) + "did he like it");
-    if (likes.includes(userId)) {
-      setSelected(true);
-      console.log(selected + "its true");
-    } else {
-      setSelected(false);
-      console.log(selected + "it is false");
-    }
-  }, []);
+
   async function getUserNameAndImage() {
     const req = await fetch("http://localhost:5000/api/FindUserId", {
       method: "POST",
@@ -88,6 +87,23 @@ function Posts({
       setImage(data.picture);
     } else {
       alert(data.error);
+    }
+  }
+  useEffect(() => {
+    getUserNameAndImage();
+    checkIfUserLikedImage();
+  }, []);
+  function checkIfUserLikedImage() {
+    console.log("likes array " + likes);
+    console.log("user id " + userId);
+    console.log(selected);
+    console.log(likes.includes(userId) + " result");
+    if (likes.includes(userId)) {
+      setSelected(true);
+      console.log("toggle is true: " + selected);
+    } else {
+      setSelected(false);
+      console.log("toggle is false: " + selected);
     }
   }
   return (
@@ -157,28 +173,6 @@ function Posts({
         {/* <div id="borderBetweenLikeAndComment"></div> */}
         <div id="comment">
           <div>
-            {/* <ToggleButton
-              id="commentsButton"
-              style={
-                selectedcomments
-                  ? {
-                      color: "#9c27b0",
-                    }
-                  : {
-                      color: "white",
-                      ":hover": {
-                        cursor: "pointer",
-                        color: "#9c27b0",
-                      },
-                    }
-              }
-              color="secondary"
-              value="check"
-              selected={selectedcomments}
-              onChange={() => {
-                setselectedcomments(!selectedcomments);
-              }}
-            > */}
             <Button id="commentsButton" color="secondary" variant="text">
               <ChatBubbleOutlineIcon />
             </Button>
