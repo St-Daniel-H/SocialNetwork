@@ -10,7 +10,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import Button from "@mui/material/Button";
 import { useSelector, useDispatch } from "react-redux";
 import SwipeableEdgeDrawer from "./commentsDrawer";
-
+import CommentSection from "./commentsDrawer";
 function Posts({
   _id,
   title,
@@ -25,14 +25,12 @@ function Posts({
   console.log("user id is that was imported from home: " + userId);
   //const userId = useSelector((state) => state.user.user_id);
   const [likesCount, setLikesCount] = useState(likes.length);
-  const [isLoading, setIsLoading] = useState(false);
-
   const [selected, setSelected] = useState();
   console.log(likes);
-  console.log("hi");
   const [name, setName] = useState("Unavailable");
   const [image, setImage] = useState("");
-  console.log("iser id" + userId);
+  const [commentsButton, setCommentsButton] = useState(false);
+
   //for like button
   async function addRemoveLike() {
     setIsLoading(true);
@@ -126,7 +124,7 @@ function Posts({
         <h4>{title}</h4>
       </div>
       <div id="Summary">
-        <span>{summary}</span>
+        <p>{summary}</p>
       </div>
       {cover && (
         <div id="image">
@@ -173,7 +171,15 @@ function Posts({
         {/* <div id="borderBetweenLikeAndComment"></div> */}
         <div id="comment">
           <div>
-            <Button id="commentsButton" color="secondary" variant="text">
+            <Button
+              id="commentsButton"
+              onClick={() => {
+                document.body.style.overflow = "hidden";
+                setCommentsButton(true);
+              }}
+              color="secondary"
+              variant="text"
+            >
               <ChatBubbleOutlineIcon />
             </Button>
 
@@ -188,6 +194,7 @@ function Posts({
           </div>
         </div>
       </div>
+      <CommentSection trigger={commentsButton} setTrigger={setCommentsButton} />
     </div>
   );
 }
