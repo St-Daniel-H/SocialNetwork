@@ -92,7 +92,7 @@ function Posts({
   useEffect(() => {
     getUserNameAndImage();
     checkIfUserLikedImage();
-  }, []);
+  }, [userId, likes]);
   function checkIfUserLikedImage() {
     console.log("likes array " + likes);
     console.log("user id " + userId);
@@ -126,7 +126,7 @@ function Posts({
         <h4>{title}</h4>
       </div>
       <div id="Summary">
-        <p>{summary}</p>
+        <span>{summary}</span>
       </div>
       {cover && (
         <div id="image">
