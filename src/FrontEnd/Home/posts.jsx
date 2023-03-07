@@ -33,7 +33,7 @@ function Posts({
 
   //for like button
   async function addRemoveLike() {
-    setIsLoading(true);
+    console.log(likesCount);
     try {
       if (selected) {
         setLikesCount(likesCount - 1);
