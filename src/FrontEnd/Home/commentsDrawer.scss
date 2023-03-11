@@ -23,6 +23,13 @@
     #commentsWrap{
         margin:10px;
     }
+    #commentsbyotherusers{
+       overflow-y:scroll;
+        max-height:350px;
+        background-color: #1a1919;
+        padding:10px;
+        margin-bottom:150px;
+    }
     #otherUsers{
         background-color: #1a1919;
     }

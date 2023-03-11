@@ -26,7 +26,7 @@ function Posts({
   //const userId = useSelector((state) => state.user.user_id);
   const [postLikes, setPostLikes] = useState([...likes]);
   const [likesCount, setLikesCount] = useState(postLikes.length);
-  const [selected, setSelected] = useState(postLikes.includes(userId));
+  const [selected, setSelected] = useState(false);
   console.log();
   const [name, setName] = useState("Unavailable");
   const [image, setImage] = useState("");
@@ -207,7 +207,12 @@ function Posts({
           </div>
         </div>
       </div>
-      <CommentSection trigger={commentsButton} setTrigger={setCommentsButton} />
+      <CommentSection
+        postId={_id}
+        commentsId={comments}
+        trigger={commentsButton}
+        setTrigger={setCommentsButton}
+      />
     </div>
   );
 }

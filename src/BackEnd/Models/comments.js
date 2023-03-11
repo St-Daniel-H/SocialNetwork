@@ -1,15 +1,27 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 // create an schema
 var commentsSchema = new mongoose.Schema(
   {
-    id: Number,
-    postsId: Number,
-    commentorId: Number,
+    id: String,
+    commentorId: {
+      type: String,
+      required: true,
+    },
+    postId: {
+      type: String,
+      required: true,
+    },
+    message: {
+      type: String,
+      required: true,
+    },
+    replies: Array,
   },
+  { timestamps: true },
   { collection: "commentsData" }
 );
 
 var commentsModel = mongoose.model("comments", commentsSchema);
 
-module.exports = commentsModel;
+export default commentsModel;

@@ -51,7 +51,7 @@ app.get("/api/home", async (req, res) => {
     const decoded = jwt.verify(token, "secret123");
     const id = decoded.id;
     const user = await userModel.findById(id);
-    console.log("this is the user" + user);
+    // console.log("this is the user" + user);
     return res.json({
       status: "Ok",
       name: user.name,
@@ -124,7 +124,7 @@ app.post("/api/FindUserId", async (req, res) => {
   const id = req.body.id;
   try {
     const user = await userModel.findById(id);
-    console.log("this is the user" + user);
+    // console.log("this is the user" + user);
     return res.json({
       status: "Ok",
       name: user.name,
@@ -171,12 +171,41 @@ app.post("/post/like", async (req, res) => {
 //get likes
 app.post("/api/getPostLikes", async (req, res) => {
   const likes = await postModel.findById(req.body.postId);
-  console.log("from backend" + likes.likes);
+  // console.log("from backend" + likes.likes);
   res.json({
     likes: likes.likes,
     status: "Ok",
   });
 });
+//get comments
+import commentsModel from "./Models/comments.js";
+app.post("/getComments", async (req, res) => {
+  const ids = req.body.commentsId;
+  console.log("I received: " + ids);
+  const comments = await commentsModel.find({ _id: { $in: ids } });
+  res.json({
+    status: "Ok",
+    comments: comments,
+  });
+});
+//post comment
+app.post("/api/Comment", async (req, res) => {
+  try {
+    const comment = await commentsModel.create({
+      commentorId: req.body.commentorId,
+      postId: req.body.postId,
+      message: req.body.message,
+    });
+    await postModel.findOneAndUpdate(
+      { _id: req.body.postId },
+      { $addToSet: { comments: comment._id } }
+    );
+    res.json({ status: "Ok" });
+  } catch (err) {
+    res.json({ status: err });
+  }
+});
+
 app.use("*", (req, res) => {
   res.status(404).json({
     error: "not found!",
