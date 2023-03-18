@@ -11,6 +11,9 @@ import Button from "@mui/material/Button";
 import { useSelector, useDispatch } from "react-redux";
 import SwipeableEdgeDrawer from "./commentsDrawer";
 import CommentSection from "./commentsDrawer";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 function Posts({
   _id,
   title,
@@ -33,6 +36,36 @@ function Posts({
   const [image, setImage] = useState("");
   const [commentsButton, setCommentsButton] = useState(false);
   console.log(commentsCount + " is the comment count");
+  //for three dots
+  let screen_user_Id = useSelector((state) => state.user.user_id);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  async function handleCloseAndDelete() {
+    const req = await fetch("http://localhost:5000/DeletePost", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        postId: _id,
+      }),
+    });
+    const data = await req.json();
+    if (data.status === "Ok") {
+      alert("post deleted");
+      window.location.reload();
+    } else {
+      alert(data.error);
+    }
+    setAnchorEl(null);
+  }
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  //end for three dots
   //for like button
   async function addRemoveLike() {
     try {
@@ -125,9 +158,37 @@ function Posts({
           <img id="PosterImage" src={userDefaultImage}></img>
         </Link>
         <div id="posterNameAndDate">
-          <Link to={"/user/" + posterId}>
-            <h4 id="PosterName">{name}</h4>
-          </Link>
+          <div id="NameAndDots">
+            <Link to={"/user/" + posterId}>
+              <h4 id="PosterName">{name}</h4>
+            </Link>{" "}
+            {posterId == screen_user_Id && (
+              <div id="threedots">
+                {" "}
+                <div
+                  className="toolcase"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
+                >
+                  <MoreVertIcon />
+                </div>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  <MenuItem onClick={handleCloseAndDelete}>Delete </MenuItem>
+                  <MenuItem onClick={handleClose}>Edit </MenuItem>
+                </Menu>{" "}
+              </div>
+            )}
+          </div>
           <time id="postDate">
             {format(new Date(createdAt), "MMM d, yyyy HH:mm")}
           </time>

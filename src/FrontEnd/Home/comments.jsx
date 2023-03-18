@@ -70,7 +70,7 @@ function Comment({
       setComments(
         comments.filter((x) => x._id !== comments[indexOfComment]._id)
       );
-      setCommentsCount(commentsCount--);
+      setCommentsCount((commentsCount) => commentsCount - 1);
     } else {
       alert(data.error);
     }

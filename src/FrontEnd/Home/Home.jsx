@@ -25,6 +25,7 @@ import UserWidget from "./userWidget";
 import Posts from "./posts";
 import OnlineFriendsWidget from "./onlineFriends";
 import userDefaultImage from "./default_profile_picture.png";
+import CreatePost from "../createPost/createPost";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -87,6 +88,7 @@ const homePage = () => {
   //   }
   // }
   const [posts, setPosts] = useState([]);
+  const [createPostButton, setCreatePostButton] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -228,7 +230,14 @@ const homePage = () => {
                   </MenuItem>
                 </Menu>
               </div>
-              <div className="toolcasePc" id="post">
+              <div
+                onClick={() => {
+                  setCreatePostButton(true);
+                  document.body.style.overflow = "hidden";
+                }}
+                className="toolcasePc"
+                id="post"
+              >
                 <AddCircleOutlineIcon />
               </div>
               <div className="toolcasePc" id="message">
@@ -289,6 +298,7 @@ const homePage = () => {
         <OnlineFriendsWidget className="Widget" />
         {/* tab links */}
       </div>
+      <CreatePost trigger={createPostButton} setTrigger={setCreatePostButton} />
     </div>
   );
 };

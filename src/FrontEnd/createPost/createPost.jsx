@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import "./createPost.scss";
+import CloseIcon from "@mui/icons-material/Close";
 
-function CreatePost() {
+function CreatePost({ trigger, setTrigger }) {
   const [title, setTitle] = useState("Title");
   const [summary, setSummary] = useState("Summary");
   const [file, setFile] = useState("");
@@ -20,25 +22,44 @@ function CreatePost() {
       method: "POST",
       body: data,
     });
-    window.location.href = "/";
+    if (response.status == "Ok") {
+      alert("Posted");
+    }
+    window.location.reload();
   }
-  return (
+  return trigger ? (
     <form onSubmit={createNewPost} id="CreatePost">
-      <h1>What's on your mind?</h1>
+      <div id="titleandbutton">
+        <h1>What's on your mind?</h1>{" "}
+        <button
+          id="closeComments"
+          onClick={() => {
+            document.body.style.overflow = "unset";
+            setTrigger(false);
+          }}
+        >
+          <CloseIcon />
+        </button>
+      </div>
       <div id="createPostForm">
         <input
           placeholder="Title"
           valye={title}
           onChange={(ev) => setTitle(ev.target.value)}
           type="text"
+          className="inputCreatePost"
         ></input>
 
-        <input
+        <textarea
           placeholder="Summary"
           valye={summary}
           onChange={(ev) => setSummary(ev.target.value)}
-          type="text"
-        ></input>
+          className="inputCreatePost"
+          rows="5"
+          cols="10"
+          wrap="hard"
+          maxLength="300"
+        ></textarea>
 
         <input
           onChange={(ev) => setFile(ev.target.files)}
@@ -47,11 +68,11 @@ function CreatePost() {
           accept="image/x-png,image/gif,image/jpeg"
         ></input>
 
-        <button type="submit" onClick={createNewPost}>
-          Create Post
-        </button>
+        <button type="submit">Create Post</button>
       </div>
     </form>
+  ) : (
+    ""
   );
 }
 export default CreatePost;

@@ -17,6 +17,12 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #741d88; 
 }
+#threedots{
+  cursor: pointer;
+  &:hover{
+    color:#9c27b0
+  }
+}
 .homePage{  
   color:#ffffff;
   background-color: #161616;
@@ -122,6 +128,7 @@
         padding: 10px;
       }
       .toolcasePc {
+        background-color: #222;
         :hover{
           cursor:pointer;
           color:#9c27b0

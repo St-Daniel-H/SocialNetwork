@@ -90,30 +90,47 @@ import fs from "fs"; //To change the file name, this is called "file system"
 const uploadMiddleWare = multer({ dest: "./src/BackEnd/Uploads/posts/" });
 
 app.post("/createPost", uploadMiddleWare.single("file"), async (req, res) => {
-  if (req.file) {
-    const { originalname, path } = req.file;
-    const parts = originalname.split(".");
-    const ext = parts[parts.length - 1];
-    const newPath = path + "." + ext;
-    fs.renameSync(path, newPath);
-    res.json(req.file);
-    const { title, summary, posterId } = req.body;
-    const postDoc = await postModel.create({
-      posterId: posterId,
-      title: title,
-      summary: summary,
-      cover: newPath,
-    });
-  } else {
-    const { title, summary, posterId } = req.body;
-    const postDoc = await postModel.create({
-      posterId: posterId,
-      title: title,
-      summary: summary,
-    });
+  try {
+    if (req.file) {
+      const { originalname, path } = req.file;
+      const parts = originalname.split(".");
+      const ext = parts[parts.length - 1];
+      const newPath = path + "." + ext;
+      fs.renameSync(path, newPath);
+      res.json(req.file);
+      const { title, summary, posterId } = req.body;
+      const postDoc = await postModel.create({
+        posterId: posterId,
+        title: title,
+        summary: summary,
+        cover: newPath,
+      });
+      res.json({ status: "Ok" });
+    } else {
+      const { title, summary, posterId } = req.body;
+      const postDoc = await postModel.create({
+        posterId: posterId,
+        title: title,
+        summary: summary,
+      });
+      res.json({ status: "Ok" });
+    }
+  } catch (err) {
+    console.log(err);
   }
 
   // res.json(postDoc)
+});
+app.post("/DeletePost", async (req, res) => {
+  try {
+    const post = await postModel.findById(req.body.postId);
+    const comments = post.comments;
+    await commentsModel.deleteMany({ _id: { $in: comments } });
+    await postModel.findByIdAndDelete(req.body.postId);
+    res.json({ status: "Ok" });
+  } catch (err) {
+    console.log(err);
+  }
 });
 //get the posts
 app.get("/posts", async (req, res) => {

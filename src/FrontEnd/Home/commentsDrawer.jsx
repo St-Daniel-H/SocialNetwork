@@ -57,7 +57,7 @@ function CommentSection({
   }
   async function postComment(event) {
     event.preventDefault();
-    setCommentsCount((commentsCount) => commentsCount++);
+    setCommentsCount((commentsCount) => commentsCount + 1);
     const response = await fetch("http://localhost:5000/api/Comment", {
       method: "POST",
       headers: {
