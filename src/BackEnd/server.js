@@ -174,6 +174,7 @@ app.post("/api/getPostLikes", async (req, res) => {
   // console.log("from backend" + likes.likes);
   res.json({
     likes: likes.likes,
+    comments: likes.comments,
     status: "Ok",
   });
 });
@@ -181,8 +182,9 @@ app.post("/api/getPostLikes", async (req, res) => {
 import commentsModel from "./Models/comments.js";
 app.post("/getComments", async (req, res) => {
   const ids = req.body.commentsId;
-  console.log("I received: " + ids);
-  const comments = await commentsModel.find({ _id: { $in: ids } });
+  const comments = await commentsModel
+    .find({ _id: { $in: ids } })
+    .sort({ createdAt: -1 });
   res.json({
     status: "Ok",
     comments: comments,
@@ -198,14 +200,25 @@ app.post("/api/Comment", async (req, res) => {
     });
     await postModel.findOneAndUpdate(
       { _id: req.body.postId },
-      { $addToSet: { comments: comment._id } }
+      { $addToSet: { comments: comment._id.toString() } }
     );
-    res.json({ status: "Ok" });
+    res.json({ status: "Ok", comment: comment });
   } catch (err) {
     res.json({ status: err });
   }
 });
-
+app.post("/DeleteComment", async (req, res) => {
+  try {
+    await commentsModel.findByIdAndRemove(req.body.id);
+    const post = await postModel.findOneAndUpdate(
+      { _id: req.body.postId },
+      { $pull: { comments: req.body.id } }
+    );
+    res.json({ status: "Ok", post });
+  } catch (err) {
+    res.json({ status: err });
+  }
+});
 app.use("*", (req, res) => {
   res.status(404).json({
     error: "not found!",

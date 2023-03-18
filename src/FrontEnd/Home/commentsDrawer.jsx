@@ -3,7 +3,17 @@ import { useSelector } from "react-redux";
 import "./commentsDrawer.scss";
 import image from "./default_profile_picture.png";
 import Comment from "./comments";
-function CommentSection({ commentsId, trigger, setTrigger, postId }) {
+import CloseIcon from "@mui/icons-material/Close";
+import TextField from "@mui/material/TextField";
+import SendIcon from "@mui/icons-material/Send";
+function CommentSection({
+  commentsId,
+  trigger,
+  setTrigger,
+  postId,
+  setCommentsCount,
+  commentsCount,
+}) {
   //get comments from database that have the same commentsIds in the array commentsId
   const [comments, setComments] = useState([]);
   const [message, setMessage] = useState("");
@@ -40,13 +50,14 @@ function CommentSection({ commentsId, trigger, setTrigger, postId }) {
     const comments = await response.json();
     if (comments.status === "Ok") {
       setComments(comments.comments);
-      console.log("comments:" + comments);
+      console.log("Ok");
     } else {
       alert(comments.error);
     }
   }
   async function postComment(event) {
     event.preventDefault();
+    setCommentsCount((commentsCount) => commentsCount++);
     const response = await fetch("http://localhost:5000/api/Comment", {
       method: "POST",
       headers: {
@@ -61,19 +72,17 @@ function CommentSection({ commentsId, trigger, setTrigger, postId }) {
     const data = await response.json();
     console.log(data);
     if (data.status == "Ok") {
-      console.log("sucsses");
-      setComments(data);
+      setComments([data.comment, ...comments]);
+      setMessage("");
     } else {
       alert("Error");
     }
-    window.location.reload();
   }
   const name = useSelector((state) => state.user.user_name);
   const userid = useSelector((state) => state.user.user_id);
   useEffect(() => {
     getComments();
   }, []);
-  console.log(comments);
   return trigger ? (
     <div id="commentSection">
       <div id="comments">
@@ -85,14 +94,21 @@ function CommentSection({ commentsId, trigger, setTrigger, postId }) {
               setTrigger(false);
             }}
           >
-            close
+            <CloseIcon />
           </button>
+
           <div id="commentsbyotherusers">
             <ul style={{ listStyle: "none" }}>
               {comments.length > 0 &&
                 comments.map((comment) => (
                   <li key={comment._id}>
-                    <Comment {...comment} />
+                    <Comment
+                      {...comment}
+                      comments={comments}
+                      setComments={setComments}
+                      commentsCount={commentsCount}
+                      setCommentsCount={setCommentsCount}
+                    />
                     <br></br>
                   </li>
                 ))}
@@ -107,16 +123,27 @@ function CommentSection({ commentsId, trigger, setTrigger, postId }) {
                 width="32"
                 src={image}
               ></img>
-              <p>{name}</p>
-            </div>
-            <div id="commentTextField">
-              <input
-                type="text"
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
-                required
-              ></input>
-              <button onClick={postComment}>Submit</button>
+              <div id="NameAndComment">
+                <p>{name}</p>
+                <form onSubmit={postComment}>
+                  <div id="commentTextField">
+                    <div id="commentInputField">
+                      <input
+                        type="text"
+                        id="commentInput"
+                        onChange={(e) => setMessage(e.target.value)}
+                        value={message}
+                        required
+                      />
+                    </div>
+                    <div>
+                      <button type="submit" id="submitComment">
+                        <SendIcon />
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

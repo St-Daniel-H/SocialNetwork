@@ -24,6 +24,7 @@ function Posts({
 }) {
   console.log("user id is that was imported from home: " + userId);
   //const userId = useSelector((state) => state.user.user_id);
+  const [commentsCount, setCommentsCount] = useState(0);
   const [postLikes, setPostLikes] = useState([...likes]);
   const [likesCount, setLikesCount] = useState(postLikes.length);
   const [selected, setSelected] = useState(false);
@@ -31,7 +32,7 @@ function Posts({
   const [name, setName] = useState("Unavailable");
   const [image, setImage] = useState("");
   const [commentsButton, setCommentsButton] = useState(false);
-
+  console.log(commentsCount + " is the comment count");
   //for like button
   async function addRemoveLike() {
     try {
@@ -104,6 +105,7 @@ function Posts({
     console.log("from backend" + postLikes);
     if (postLikes.status === "Ok") {
       setPostLikes([...postLikes.likes]);
+      setCommentsCount(postLikes.comments.length);
     } else {
       alert(data.error);
     }
@@ -111,10 +113,8 @@ function Posts({
 
     if (postLikes.likes.includes(userId)) {
       setSelected(true);
-      console.log("toggle is true: " + selected);
     } else {
       setSelected(false);
-      console.log("toggle is false: " + selected);
     }
   }
   return (
@@ -203,7 +203,7 @@ function Posts({
             <ChatBubbleOutlineIcon />
           </button> */}
           <div>
-            <p>{comments.length}</p>
+            <p>{commentsCount}</p>
           </div>
         </div>
       </div>
@@ -211,6 +211,8 @@ function Posts({
         postId={_id}
         commentsId={comments}
         trigger={commentsButton}
+        commentsCount={commentsCount}
+        setCommentsCount={setCommentsCount}
         setTrigger={setCommentsButton}
       />
     </div>
