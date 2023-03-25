@@ -60,7 +60,7 @@ function UserProfile() {
   return (
     <div id='UserProfile'>
       <div id='leftSide'>
-        <img src={image || userDefaultImage}></img>
+        <img src={image == '/' ? userDefaultImage : image}></img>
         <h1>{name}</h1>{' '}
         <form onSubmit={updateUserProfilePicture}>
           <input

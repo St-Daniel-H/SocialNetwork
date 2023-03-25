@@ -54,7 +54,7 @@ function Apps() {
         <Route path='/login' element={<Login />} />
         <Route path='/createPost' element={<CreatePost />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path='/home' element={<Home />} />
+        <Route path='/' element={<Home />} />
         {/* <Route path="/topbar" element={<TopBar />} /> */}
         <Route path='/test' element={<Test />} />
         <Route path='/user/:id' element={<UserProfile />} />
