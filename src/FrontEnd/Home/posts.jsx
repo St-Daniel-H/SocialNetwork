@@ -1,19 +1,19 @@
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import { formatISO9075, format } from "date-fns";
-import { useState, useEffect } from "react";
-import "./posts.scss";
-import { Link } from "react-router-dom";
-import userDefaultImage from "./default_profile_picture.png";
-import image from "../login/picture.jpg";
-import ToggleButton from "@mui/material/ToggleButton";
-import Button from "@mui/material/Button";
-import { useSelector, useDispatch } from "react-redux";
-import SwipeableEdgeDrawer from "./commentsDrawer";
-import CommentSection from "./commentsDrawer";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import { formatISO9075, format } from 'date-fns';
+import { useState, useEffect } from 'react';
+import './posts.scss';
+import { Link } from 'react-router-dom';
+import userDefaultImage from './default_profile_picture.png';
+import image from '../login/picture.jpg';
+import ToggleButton from '@mui/material/ToggleButton';
+import Button from '@mui/material/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import SwipeableEdgeDrawer from './commentsDrawer';
+import CommentSection from './commentsDrawer';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 function Posts({
   _id,
   title,
@@ -25,17 +25,17 @@ function Posts({
   comments,
   userId,
 }) {
-  console.log("user id is that was imported from home: " + userId);
+  console.log('user id is that was imported from home: ' + userId);
   //const userId = useSelector((state) => state.user.user_id);
   const [commentsCount, setCommentsCount] = useState(0);
   const [postLikes, setPostLikes] = useState([...likes]);
   const [likesCount, setLikesCount] = useState(postLikes.length);
   const [selected, setSelected] = useState(false);
   console.log();
-  const [name, setName] = useState("Unavailable");
-  const [image, setImage] = useState("");
+  const [name, setName] = useState('Unavailable');
+  const [image, setImage] = useState('');
   const [commentsButton, setCommentsButton] = useState(false);
-  console.log(commentsCount + " is the comment count");
+  console.log(commentsCount + ' is the comment count');
   //for three dots
   let screen_user_Id = useSelector((state) => state.user.user_id);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -44,18 +44,18 @@ function Posts({
     setAnchorEl(event.currentTarget);
   };
   async function handleCloseAndDelete() {
-    const req = await fetch("http://localhost:5000/DeletePost", {
-      method: "POST",
+    const req = await fetch('http://localhost:5000/DeletePost', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         postId: _id,
       }),
     });
     const data = await req.json();
-    if (data.status === "Ok") {
-      alert("post deleted");
+    if (data.status === 'Ok') {
+      alert('post deleted');
       window.location.reload();
     } else {
       alert(data.error);
@@ -71,10 +71,10 @@ function Posts({
     try {
       if (selected) {
         setLikesCount(likesCount - 1);
-        const req = await fetch("http://localhost:5000/post/dislike", {
-          method: "POST",
+        const req = await fetch('http://localhost:5000/post/dislike', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             userId: userId,
@@ -83,10 +83,10 @@ function Posts({
         });
       } else {
         setLikesCount(likesCount + 1);
-        const req = await fetch("http://localhost:5000/post/like", {
-          method: "POST",
+        const req = await fetch('http://localhost:5000/post/like', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             userId: userId,
@@ -103,17 +103,17 @@ function Posts({
   //end for comments
 
   async function getUserNameAndImage() {
-    const req = await fetch("http://localhost:5000/api/FindUserId", {
-      method: "POST",
+    const req = await fetch('http://localhost:5000/api/FindUserId', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         id: posterId,
       }),
     });
     const data = await req.json();
-    if (data.status === "Ok") {
+    if (data.status === 'Ok') {
       setName(data.name);
       setImage(data.picture);
     } else {
@@ -125,18 +125,18 @@ function Posts({
     checkIfUserLikedImage();
   }, [likes, userId]);
   async function checkIfUserLikedImage() {
-    const req = await fetch("http://localhost:5000/api/getPostLikes", {
-      method: "POST",
+    const req = await fetch('http://localhost:5000/api/getPostLikes', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         postId: _id,
       }),
     });
     const postLikes = await req.json();
-    console.log("from backend" + postLikes);
-    if (postLikes.status === "Ok") {
+    console.log('from backend' + postLikes);
+    if (postLikes.status === 'Ok') {
       setPostLikes([...postLikes.likes]);
       setCommentsCount(postLikes.comments.length);
     } else {
@@ -151,81 +151,79 @@ function Posts({
     }
   }
   return (
-    <div id="postCard">
-      <div id="postUserInfo">
-        <Link to={"/user/" + posterId}>
-          {" "}
-          <img id="PosterImage" src={userDefaultImage}></img>
-        </Link>
-        <div id="posterNameAndDate">
-          <div id="NameAndDots">
-            <Link to={"/user/" + posterId}>
-              <h4 id="PosterName">{name}</h4>
-            </Link>{" "}
+    <div id='postCard'>
+      <div id='postUserInfo'>
+        <img id='PosterImage' src={image || userDefaultImage}></img>
+
+        <div id='posterNameAndDate'>
+          <div id='NameAndDots'>
+            <Link to={'/user/' + posterId}>
+              <h4 id='PosterName'>{name}</h4>
+            </Link>{' '}
             {posterId == screen_user_Id && (
-              <div id="threedots">
-                {" "}
+              <div id='threedots'>
+                {' '}
                 <div
-                  className="toolcase"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
+                  className='toolcase'
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup='true'
+                  aria-expanded={open ? 'true' : undefined}
                   onClick={handleClick}
                 >
                   <MoreVertIcon />
                 </div>
                 <Menu
-                  id="basic-menu"
+                  id='basic-menu'
                   anchorEl={anchorEl}
                   open={open}
                   onClose={handleClose}
                   MenuListProps={{
-                    "aria-labelledby": "basic-button",
+                    'aria-labelledby': 'basic-button',
                   }}
                 >
                   <MenuItem onClick={handleCloseAndDelete}>Delete </MenuItem>
                   <MenuItem onClick={handleClose}>Edit </MenuItem>
-                </Menu>{" "}
+                </Menu>{' '}
               </div>
             )}
           </div>
-          <time id="postDate">
-            {format(new Date(createdAt), "MMM d, yyyy HH:mm")}
+          <time id='postDate'>
+            {format(new Date(createdAt), 'MMM d, yyyy HH:mm')}
           </time>
         </div>
       </div>
-      <div id="title">
+      <div id='title'>
         <h4>{title}</h4>
       </div>
-      <div id="Summary">
+      <div id='Summary'>
         <p>{summary}</p>
       </div>
       {cover && (
-        <div id="image">
-          {" "}
+        <div id='image'>
+          {' '}
           <img src={cover}></img>
         </div>
       )}
-      <div id="buttons">
-        <div id="like">
+      <div id='buttons'>
+        <div id='like'>
           <div>
             <ToggleButton
-              id="likeButton"
+              id='likeButton'
               style={
                 selected
                   ? {
-                      color: "#9c27b0",
+                      color: '#9c27b0',
                     }
                   : {
-                      color: "white",
-                      ":hover": {
-                        cursor: "pointer",
-                        color: "#9c27b0",
+                      color: 'white',
+                      ':hover': {
+                        cursor: 'pointer',
+                        color: '#9c27b0',
                       },
                     }
               }
-              color="secondary"
-              value="check"
+              color='secondary'
+              value='check'
               selected={selected}
               onChange={() => {
                 setSelected(!selected);
@@ -243,16 +241,16 @@ function Posts({
           </div>
         </div>
         {/* <div id="borderBetweenLikeAndComment"></div> */}
-        <div id="comment">
+        <div id='comment'>
           <div>
             <Button
-              id="commentsButton"
+              id='commentsButton'
               onClick={() => {
-                document.body.style.overflow = "hidden";
+                document.body.style.overflow = 'hidden';
                 setCommentsButton(true);
               }}
-              color="secondary"
-              variant="text"
+              color='secondary'
+              variant='text'
             >
               <ChatBubbleOutlineIcon />
             </Button>

@@ -22,7 +22,6 @@ const User = new mongoose.Schema(
     },
     picture: {
       type: String,
-      default: "default_profile_picture.png",
     },
     friendsIds: Array,
     postsIds: Array,

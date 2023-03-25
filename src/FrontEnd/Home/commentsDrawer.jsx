@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import "./commentsDrawer.scss";
-import image from "./default_profile_picture.png";
-import Comment from "./comments";
-import CloseIcon from "@mui/icons-material/Close";
-import TextField from "@mui/material/TextField";
-import SendIcon from "@mui/icons-material/Send";
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import './commentsDrawer.scss';
+import image from './default_profile_picture.png';
+import Comment from './comments';
+import CloseIcon from '@mui/icons-material/Close';
+import TextField from '@mui/material/TextField';
+import SendIcon from '@mui/icons-material/Send';
 function CommentSection({
   commentsId,
   trigger,
@@ -16,7 +16,7 @@ function CommentSection({
 }) {
   //get comments from database that have the same commentsIds in the array commentsId
   const [comments, setComments] = useState([]);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   // async function getComments() {
   //   console.log("coomments array" + commentsId);
@@ -38,19 +38,19 @@ function CommentSection({
   //   }
   // }
   async function getComments() {
-    const response = await fetch("http://localhost:5000/getComments", {
-      method: "POST",
+    const response = await fetch('http://localhost:5000/getComments', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         commentsId: commentsId,
       }),
     });
     const comments = await response.json();
-    if (comments.status === "Ok") {
+    if (comments.status === 'Ok') {
       setComments(comments.comments);
-      console.log("Ok");
+      console.log('Ok');
     } else {
       alert(comments.error);
     }
@@ -58,10 +58,10 @@ function CommentSection({
   async function postComment(event) {
     event.preventDefault();
     setCommentsCount((commentsCount) => commentsCount + 1);
-    const response = await fetch("http://localhost:5000/api/Comment", {
-      method: "POST",
+    const response = await fetch('http://localhost:5000/api/Comment', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         postId: postId,
@@ -71,34 +71,35 @@ function CommentSection({
     });
     const data = await response.json();
     console.log(data);
-    if (data.status == "Ok") {
+    if (data.status == 'Ok') {
       setComments([data.comment, ...comments]);
-      setMessage("");
+      setMessage('');
     } else {
-      alert("Error");
+      alert('Error');
     }
   }
   const name = useSelector((state) => state.user.user_name);
   const userid = useSelector((state) => state.user.user_id);
+  const userImage = useSelector((state) => state.user.profile_picture);
   useEffect(() => {
     getComments();
   }, []);
   return trigger ? (
-    <div id="commentSection">
-      <div id="comments">
-        <div id="commentsWrap">
+    <div id='commentSection'>
+      <div id='comments'>
+        <div id='commentsWrap'>
           <button
-            id="closeComments"
+            id='closeComments'
             onClick={() => {
-              document.body.style.overflow = "unset";
+              document.body.style.overflow = 'unset';
               setTrigger(false);
             }}
           >
             <CloseIcon />
           </button>
 
-          <div id="commentsbyotherusers">
-            <ul style={{ listStyle: "none" }}>
+          <div id='commentsbyotherusers'>
+            <ul style={{ listStyle: 'none' }}>
               {comments.length > 0 &&
                 comments.map((comment) => (
                   <li key={comment._id}>
@@ -115,29 +116,29 @@ function CommentSection({
             </ul>
           </div>
 
-          <div id="addComment">
-            <div id="commentUserInfo">
+          <div id='addComment'>
+            <div id='commentUserInfo'>
               <img
-                id="userImageComment"
-                height="32"
-                width="32"
-                src={image}
+                id='userImageComment'
+                height='32'
+                width='32'
+                src={userImage == '' ? userDefaultImage : userImage}
               ></img>
-              <div id="NameAndComment">
+              <div id='NameAndComment'>
                 <p>{name}</p>
                 <form onSubmit={postComment}>
-                  <div id="commentTextField">
-                    <div id="commentInputField">
+                  <div id='commentTextField'>
+                    <div id='commentInputField'>
                       <input
-                        type="text"
-                        id="commentInput"
+                        type='text'
+                        id='commentInput'
                         onChange={(e) => setMessage(e.target.value)}
                         value={message}
                         required
                       />
                     </div>
                     <div>
-                      <button type="submit" id="submitComment">
+                      <button type='submit' id='submitComment'>
                         <SendIcon />
                       </button>
                     </div>
@@ -150,7 +151,7 @@ function CommentSection({
       </div>
     </div>
   ) : (
-    ""
+    ''
   );
 }
 export default CommentSection;

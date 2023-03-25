@@ -236,6 +236,37 @@ app.post("/DeleteComment", async (req, res) => {
     res.json({ status: err });
   }
 });
+
+//user profile
+//updating user profile image
+const uploadUserProfilePicture3 = multer({
+  dest: "./src/BackEnd/Uploads/pictures/",
+});
+
+app.post(
+  "/api/updateUserProfilePicture",
+  uploadUserProfilePicture3.single("file"),
+  async (req, res) => {
+    // console.log("id: " + req.body.id);
+    try {
+      console.log(req.file);
+      const { originalname, path } = req.file;
+      const parts = originalname.split(".");
+      const ext = parts[parts.length - 1];
+      const newPath = path + "." + ext;
+      fs.renameSync(path, newPath);
+      const { userId } = req.body;
+      const updatePicture = await userModel.findByIdAndUpdate(userId, {
+        picture: newPath,
+      });
+      res.json({ status: "Ok" });
+    } catch (err) {
+      console.log(err);
+    }
+
+    // res.json(postDoc)
+  }
+);
 app.use("*", (req, res) => {
   res.status(404).json({
     error: "not found!",

@@ -1,26 +1,27 @@
-import * as actionTypss from '../actions/types'
+import * as actionTypss from '../actions/types';
 const initialState = {
-  user_name: "Unavailable",
-  profile_picture: "../BackEnd/Uploads/pictures/default_profile_picture.png",
-  user_id:"0",
-  user_bio:"0",
-  user_email:""
-
-}
-const user_reducer = (state= initialState,action)=>{
-    switch(action.type){
-        case 'getUserData':
-            return {
-              user_name: action.name,
-              profile_picture: "../BackEnd/Uploads/pictures/"+action.picture,
-              user_id:action.id,
-              user_bio:action.bio,
-              user_email:action.email
-            };
-        default:
-            return state;
-    }
-}
+  user_name: 'Unavailable',
+  profile_picture: '',
+  user_id: '0',
+  user_bio: '0',
+  user_email: '',
+};
+const user_reducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'getUserData':
+      return {
+        user_name: action.name,
+        profile_picture: action.picture,
+        user_id: action.id,
+        user_bio: action.bio,
+        user_email: action.email,
+      };
+    case 'updateUserImage':
+      return { profile_picture: action.newPicture };
+    default:
+      return state;
+  }
+};
 export default user_reducer;
 
 // const initialUserState = {

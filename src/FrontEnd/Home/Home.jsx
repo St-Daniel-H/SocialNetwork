@@ -1,37 +1,39 @@
-import { useState, useEffect, useHistory } from "react";
-import jwt_decode from "jwt-decode";
-import "./HomeStyle.scss";
+import { useState, useEffect, useHistory } from 'react';
+import jwt_decode from 'jwt-decode';
+import './HomeStyle.scss';
 // import TopBar from './topBar/topBar'
-import * as React from "react";
-import PropTypes from "prop-types";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import HomeIcon from "@mui/icons-material/Home";
-import PhotoIcon from "@mui/icons-material/Photo";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-import MessageIcon from "@mui/icons-material/Message";
-import logo from "../pictures/logo.png";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { useSelector } from "react-redux";
-import { redirect } from "react-router-dom";
-import UserWidget from "./userWidget";
-import Posts from "./posts";
-import OnlineFriendsWidget from "./onlineFriends";
-import userDefaultImage from "./default_profile_picture.png";
-import CreatePost from "../createPost/createPost";
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import HomeIcon from '@mui/icons-material/Home';
+import PhotoIcon from '@mui/icons-material/Photo';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import MessageIcon from '@mui/icons-material/Message';
+import logo from '../pictures/logo.png';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { useSelector } from 'react-redux';
+import { redirect } from 'react-router-dom';
+import UserWidget from './userWidget';
+import Posts from './posts';
+import OnlineFriendsWidget from './onlineFriends';
+import userDefaultImage from './default_profile_picture.png';
+import CreatePost from '../createPost/createPost';
+import { Link } from 'react-router-dom';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
     <div
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
@@ -39,7 +41,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography component="span">{children}</Typography>
+          <Typography component='span'>{children}</Typography>
         </Box>
       )}
     </div>
@@ -55,7 +57,7 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
   };
 }
 
@@ -91,25 +93,25 @@ const homePage = () => {
   const [createPostButton, setCreatePostButton] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token) {
       const user = jwt_decode(token);
       console.log(user);
       if (!user) {
-        localStorage.remove("token");
-        location.replace("./login");
+        localStorage.remove('token');
+        location.replace('./login');
       }
     } else {
-      console.log("I am redirected!");
-      location.replace("./login");
+      console.log('I am redirected!');
+      location.replace('./login');
     }
     //getallposts
-    fetch("http://localhost:5000/posts").then((response) => {
+    fetch('http://localhost:5000/posts').then((response) => {
       response.json().then((post) => {
         setPosts(post);
       });
     });
-    console.log("posts:" + posts);
+    console.log('posts:' + posts);
   }, []);
   //   async function updateName(event) {
   //     event.preventDefault();
@@ -151,118 +153,123 @@ const homePage = () => {
   //Get all the posts:
 
   return (
-    <div className="homePage">
+    <div className='homePage'>
       {/* top bar */}
-      <div className="topBarPage">
-        <div id="topBar">
-          <div id="topBarLeft">
-            <div id="logo">
-              <img src={logo} width="50px" height="50px"></img>
+      <div className='topBarPage'>
+        <div id='topBar'>
+          <div id='topBarLeft'>
+            <div id='logo'>
+              <img src={logo} width='50px' height='50px'></img>
             </div>
-            <div id="searchBar">
+            <div id='searchBar'>
               <input
-                type="search"
-                id="query"
-                name="q"
-                placeholder="Search..."
-                aria-label="Search through site content"
+                type='search'
+                id='query'
+                name='q'
+                placeholder='Search...'
+                aria-label='Search through site content'
               />
               <button>
-                <svg viewBox="0 0 1024 1024">
+                <svg viewBox='0 0 1024 1024'>
                   <path
-                    className="path1"
-                    d="M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z"
+                    className='path1'
+                    d='M848.471 928l-263.059-263.059c-48.941 36.706-110.118 55.059-177.412 55.059-171.294 0-312-140.706-312-312s140.706-312 312-312c171.294 0 312 140.706 312 312 0 67.294-24.471 128.471-55.059 177.412l263.059 263.059-79.529 79.529zM189.623 408.078c0 121.364 97.091 218.455 218.455 218.455s218.455-97.091 218.455-218.455c0-121.364-103.159-218.455-218.455-218.455-121.364 0-218.455 97.091-218.455 218.455z'
                   ></path>
                 </svg>
               </button>
             </div>
           </div>
-          <div id="topBarMid">
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <div id='topBarMid'>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={value}
                 onChange={handleChange}
-                textColor="secondary"
-                indicatorColor="secondary"
-                aria-label="secondary tabs example"
+                textColor='secondary'
+                indicatorColor='secondary'
+                aria-label='secondary tabs example'
               >
                 <Tab label={<HomeIcon />} {...a11yProps(0)} />
                 <Tab label={<PhotoIcon />} {...a11yProps(1)} />
               </Tabs>
             </Box>
           </div>
-          <div id="topBarRight">
-            <div id="profile">
-              <img id="userImageAtTopBar" src={userDefaultImage}></img>
-              <p>{name || "no name found"}</p>
+          <div id='topBarRight'>
+            <div id='profile'>
+              <img
+                id='userImageAtTopBar'
+                src={profilePicture == '' ? userDefaultImage : profilePicture}
+              ></img>
+              <Link to={'/user/' + userId}>
+                <p>{name || 'no name found'}</p>
+              </Link>
             </div>
-            <div id="tools">
-              <div id="moreTools">
+            <div id='tools'>
+              <div id='moreTools'>
                 <div
-                  className="toolcase"
-                  aria-controls={open ? "basic-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
+                  className='toolcase'
+                  aria-controls={open ? 'basic-menu' : undefined}
+                  aria-haspopup='true'
+                  aria-expanded={open ? 'true' : undefined}
                   onClick={handleClick}
                 >
                   <MoreVertIcon />
                 </div>
                 <Menu
-                  id="basic-menu"
+                  id='basic-menu'
                   anchorEl={anchorEl}
                   open={open}
                   onClose={handleClose}
                   MenuListProps={{
-                    "aria-labelledby": "basic-button",
+                    'aria-labelledby': 'basic-button',
                   }}
                 >
                   <MenuItem onClick={handleClose}>
-                    <AddCircleOutlineIcon /> Post{" "}
+                    <AddCircleOutlineIcon /> Post{' '}
                   </MenuItem>
                   <MenuItem onClick={handleClose}>
-                    <MessageIcon /> Messages{" "}
+                    <MessageIcon /> Messages{' '}
                   </MenuItem>
                   <MenuItem onClick={handleClose}>
-                    <NotificationsActiveIcon /> Notifications{" "}
+                    <NotificationsActiveIcon /> Notifications{' '}
                   </MenuItem>
                   <MenuItem onClick={handleClose}>
-                    <SettingsIcon /> Settings{" "}
+                    <SettingsIcon /> Settings{' '}
                   </MenuItem>
                 </Menu>
               </div>
               <div
                 onClick={() => {
                   setCreatePostButton(true);
-                  document.body.style.overflow = "hidden";
+                  document.body.style.overflow = 'hidden';
                 }}
-                className="toolcasePc"
-                id="post"
+                className='toolcasePc'
+                id='post'
               >
                 <AddCircleOutlineIcon />
               </div>
-              <div className="toolcasePc" id="message">
+              <div className='toolcasePc' id='message'>
                 <MessageIcon />
               </div>
-              <div className="toolcasePc" id="notifications">
+              <div className='toolcasePc' id='notifications'>
                 <NotificationsActiveIcon />
               </div>
-              <div className="toolcasePc" id="settings">
+              <div className='toolcasePc' id='settings'>
                 <SettingsIcon />
               </div>
             </div>
           </div>
         </div>
-        <div id="topBarMidForPhone">
+        <div id='topBarMidForPhone'>
           <Box
-            id="topBoxMidForPhone"
-            sx={{ borderBottom: 0, borderColor: "divider" }}
+            id='topBoxMidForPhone'
+            sx={{ borderBottom: 0, borderColor: 'divider' }}
           >
             <Tabs
               value={value}
               onChange={handleChange}
-              textColor="secondary"
-              indicatorColor="secondary"
-              aria-label="secondary tabs example"
+              textColor='secondary'
+              indicatorColor='secondary'
+              aria-label='secondary tabs example'
             >
               <Tab
                 label={<HomeIcon sx={{ width: 20, height: 20 }} />}
@@ -277,11 +284,11 @@ const homePage = () => {
         </div>
       </div>
       {/* end of top bar */}
-      <div id="homeBody">
-        <UserWidget id="userWidget" className="Widget" />
-        <Box sx={{ width: "100%" }}>
+      <div id='homeBody'>
+        <UserWidget id='userWidget' className='Widget' />
+        <Box sx={{ width: '100%' }}>
           <TabPanel value={value} index={0}>
-            <ul style={{ listStyle: "none" }}>
+            <ul style={{ listStyle: 'none' }}>
               {posts.length > 0 &&
                 posts.map((post) => (
                   <li key={post._id}>
@@ -295,7 +302,7 @@ const homePage = () => {
             Item Two
           </TabPanel>
         </Box>
-        <OnlineFriendsWidget className="Widget" />
+        <OnlineFriendsWidget className='Widget' />
         {/* tab links */}
       </div>
       <CreatePost trigger={createPostButton} setTrigger={setCreatePostButton} />
