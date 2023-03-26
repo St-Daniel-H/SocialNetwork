@@ -4,7 +4,7 @@
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background-color: rgb(0,0,0,0.2);
+  background-color: #191919;
 }
  
 /* Handle */
@@ -153,7 +153,7 @@
     }
     .toolcasePc{
       margin-left:10px;
-      @media only screen and (max-width: 600px){
+      @media only screen and (max-width: 660px){
         display:none;
         }
           transition-duration: 0.5s;
@@ -175,7 +175,7 @@
     }
     #moreTools{
         display:none;
-        @media only screen and (max-width: 600px){
+        @media only screen and (max-width: 660px){
           display:contents;
           }
     }
@@ -231,6 +231,10 @@
         
         #userWidget{
           position: sticky;
+          width:40%;
+          @media only screen and (max-width: 950px){
+           display: none;;
+          }
         }
        
         }

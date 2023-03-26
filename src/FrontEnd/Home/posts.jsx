@@ -14,6 +14,7 @@ import CommentSection from './commentsDrawer';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+
 function Posts({
   _id,
   title,
@@ -25,6 +26,8 @@ function Posts({
   comments,
   userId,
 }) {
+  //for readmore button for summary
+  const [readMore, setReadMore] = useState(false);
   console.log('user id is that was imported from home: ' + userId);
   //const userId = useSelector((state) => state.user.user_id);
   const [commentsCount, setCommentsCount] = useState(0);
@@ -196,7 +199,35 @@ function Posts({
         <h4>{title}</h4>
       </div>
       <div id='Summary'>
-        <p>{summary}</p>
+        {summary.length > 100 && readMore == false ? (
+          <p>
+            {summary.substring(0, 100)}{' '}
+            <button
+              onClick={() => {
+                setReadMore(true);
+                console.log(readMore);
+              }}
+              className='readMore'
+            >
+              read more
+            </button>
+          </p>
+        ) : summary.length > 100 && readMore == true ? (
+          <p>
+            {summary}{' '}
+            <button
+              onClick={() => {
+                setReadMore(false);
+                console.log(readMore);
+              }}
+              className='readMore'
+            >
+              read less
+            </button>
+          </p>
+        ) : (
+          summary
+        )}
       </div>
       {cover && (
         <div id='image'>

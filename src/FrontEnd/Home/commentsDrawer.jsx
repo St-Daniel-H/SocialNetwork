@@ -134,6 +134,7 @@ function CommentSection({
                         id='commentInput'
                         onChange={(e) => setMessage(e.target.value)}
                         value={message}
+                        maxLength='200'
                         required
                       />
                     </div>

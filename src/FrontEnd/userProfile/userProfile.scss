@@ -1,3 +1,88 @@
+
 #UserProfile{
-    
+    background-color: #161616;
+    height:100vh;
+    width:100%;
+    color:white;
+    display:flex;
+    #leftSide{
+    width:400px;
+    border-right:2px solid #9c27b0;
+    background-color: #161616;
+    padding:20px;
+    #leftSideImage{
+        display:flex;
+        position: relative;
+
+        button{
+            background-color: #161616;
+            color:#9c27b0;
+            height:32px;
+            width:32px;
+            border:none;
+            position: absolute;
+            bottom: 0px;
+            right:0;
+            cursor:pointer;
+
+        }
+    }
+    #userProfileImage{
+        border-radius: 50%;
+        margin:auto;
+        display:block;
+    }
+    }
+}
+#changePictureWrapper{
+    #changePicture{
+        height:300px;
+        width:400px;
+        background-color: #222;
+        border:2px solid #9c27b0;
+        position:relative;
+        padding:10px;
+    }
+    top:0;
+    left:0;
+    height:100vh;
+    position:fixed;
+    width:100%;
+    background-color: rgb(0,0,0,0.2);
+    position: fixed;
+    z-index: 1001;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        margin-bottom:10px;
+        border-radius: 50%;
+        height:200px;
+        width:200px;
+    }
+    #closeForm{
+        background-color: #222;
+        color: #9c27b0;
+        border:none;
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 10px; 
+        height:20px;
+        width:15px;
+    }
+    button{
+        background-color: #222;
+        color: #9c27b0;
+        border:1px solid #9c27b0;
+        cursor: pointer;
+        height:40px;
+        transition:0.5s;
+        width:100px;
+        &:hover{
+            background-color: #9c27b0;
+            border:none;
+            color:black;
+        }
+    }
 }

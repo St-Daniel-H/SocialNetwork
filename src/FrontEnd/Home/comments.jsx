@@ -20,6 +20,7 @@ function Comment({
   commentsCount,
   setCommentsCount,
 }) {
+  const [readMore, setReadMore] = useState(false);
   const [name, setName] = useState('Loading');
   let screen_user_Id = useSelector((state) => state.user.user_id);
   const [image, setImage] = useState('');
@@ -133,7 +134,35 @@ function Comment({
               </div>
             </div>
             <div id='commentMessage'>
-              <p>{message}</p>
+              {message.length > 100 && readMore == false ? (
+                <p>
+                  {message.substring(0, 100)}{' '}
+                  <button
+                    onClick={() => {
+                      setReadMore(true);
+                      console.log(readMore);
+                    }}
+                    className='readMore'
+                  >
+                    read more
+                  </button>
+                </p>
+              ) : message.length > 100 && readMore == true ? (
+                <p>
+                  {message}{' '}
+                  <button
+                    onClick={() => {
+                      setReadMore(false);
+                      console.log(readMore);
+                    }}
+                    className='readMore'
+                  >
+                    read less
+                  </button>
+                </p>
+              ) : (
+                summary
+              )}
             </div>
           </div>
         </div>
