@@ -267,6 +267,51 @@ app.post(
     // res.json(postDoc)
   }
 );
+//user profile
+//Get user posts on their ID
+app.post("/user/posts", async (req, res) => {
+  const posts = await postModel
+    .find({ posterId: req.body.posterId })
+    .sort({ createdAt: -1 })
+    .limit(20);
+  res.json({
+    status: "Ok",
+    posts: posts,
+  });
+});
+//check if the user is  a friend
+app.post("/user/isFriend", async (req, res) => {
+  try {
+    const me = await userModel.findById(req.body.myId);
+    if (me.friendsIds.includes(req.body.userId)) {
+      res.json({ status: "Ok" });
+    } else {
+      res.json({ status: "Not" });
+    }
+  } catch (err) {
+    res.json(err);
+  }
+});
+//add friend
+app.post("/user/addFiend", async (req, res) => {
+  try {
+    if (req.body.add == false) {
+      const addFriend = await userModel.findOneAndUpdate(
+        { _id: req.body.myId },
+        { $addToSet: { friendsIds: req.body.newFriendId } }
+      );
+      res.json({ status: "Added" });
+    } else if (req.body.add == true) {
+      const addFriend = await userModel.findOneAndUpdate(
+        { _id: req.body.myId },
+        { $pull: { friendsIds: req.body.newFriendId } }
+      );
+      res.json({ status: "Removed" });
+    }
+  } catch (err) {
+    res.json(err);
+  }
+});
 app.use("*", (req, res) => {
   res.status(404).json({
     error: "not found!",
