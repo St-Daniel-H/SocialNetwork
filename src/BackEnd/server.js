@@ -105,7 +105,10 @@ app.post("/createPost", uploadMiddleWare.single("file"), async (req, res) => {
         summary: summary,
         cover: newPath,
       });
-      res.json({ status: "Ok" });
+      const addPostForUser = await userModel.findOneAndUpdate(
+        { _id: posterId },
+        { $addToSet: { postsIds: postDoc._id } }
+      );
     } else {
       const { title, summary, posterId } = req.body;
       const postDoc = await postModel.create({
@@ -113,8 +116,13 @@ app.post("/createPost", uploadMiddleWare.single("file"), async (req, res) => {
         title: title,
         summary: summary,
       });
-      res.json({ status: "Ok" });
+      const addPostForUser = await userModel.findOneAndUpdate(
+        { _id: posterId },
+        { $addToSet: { postsIds: postDoc._id.toString() } }
+      );
     }
+
+    res.json({ status: "Ok" });
   } catch (err) {
     console.log(err);
   }
@@ -126,6 +134,13 @@ app.post("/DeletePost", async (req, res) => {
     const post = await postModel.findById(req.body.postId);
     const comments = post.comments;
     await commentsModel.deleteMany({ _id: { $in: comments } });
+    const user = userModel.findById(req.body.posterId);
+
+    const removePost = await userModel.findOneAndUpdate(
+      { _id: req.body.posterId },
+      { $pull: { postsIds: req.body.postId } }
+    );
+
     await postModel.findByIdAndDelete(req.body.postId);
     res.json({ status: "Ok" });
   } catch (err) {
@@ -310,6 +325,30 @@ app.post("/user/addFiend", async (req, res) => {
     }
   } catch (err) {
     res.json(err);
+  }
+});
+//change bio
+app.post("/user/changeBio", async (req, res) => {
+  try {
+    const changeBio = await userModel.findByIdAndUpdate(req.body.id, {
+      bio: req.body.bio,
+    });
+    res.json({ status: "changedBio" });
+  } catch (err) {
+    res.json(err);
+  }
+});
+app.get("/user/getRandomInfo/:id", async (req, res) => {
+  try {
+    console.log("from backend" + req.params.id);
+    const user = await userModel.findById(req.params.id);
+    const userFr = user.friendsIds;
+    res.json({
+      status: "Ok",
+      friendsNum: userFr.length,
+    });
+  } catch (err) {
+    console.log(err);
   }
 });
 app.use("*", (req, res) => {

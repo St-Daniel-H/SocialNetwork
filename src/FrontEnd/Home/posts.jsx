@@ -24,12 +24,11 @@ function Posts({
   createdAt,
   likes,
   comments,
-  userId,
 }) {
   //for readmore button for summary
   const [readMore, setReadMore] = useState(false);
-  console.log("user id is that was imported from home: " + userId);
-  //const userId = useSelector((state) => state.user.user_id);
+  // console.log("user id is that was imported from home: " + userId);
+  const userId = useSelector((state) => state.user.user_id);
   const [commentsCount, setCommentsCount] = useState(0);
   const [postLikes, setPostLikes] = useState([...likes]);
   const [likesCount, setLikesCount] = useState(postLikes.length);
@@ -54,6 +53,7 @@ function Posts({
       },
       body: JSON.stringify({
         postId: _id,
+        posterId: posterId,
       }),
     });
     const data = await req.json();

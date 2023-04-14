@@ -76,7 +76,7 @@ function UserProfile() {
   const [name, setName] = useState("Unavailable");
   const [image, setImage] = useState("");
   const [bio, setBio] = useState("");
-
+  const [edittingBio, setEdittingBio] = useState(false); //this will show the textarea when the user is editting the bio!
   const [trigger, setTrigger] = useState(false);
 
   async function getUserNameAndImage() {
@@ -119,7 +119,11 @@ function UserProfile() {
     }
   }
   useEffect(() => {
-    checkIfUserFriend();
+    if (screen_user_Id !== "0") {
+      checkIfUserFriend();
+    }
+    getRandomInfo();
+    console.log("user id:" + screen_user_Id);
     getUserNameAndImage();
     getUserPosts();
     console.log(image);
@@ -146,6 +150,19 @@ function UserProfile() {
       alert(data.error);
     }
   }
+  //get user friends amount,likes amount and posts amount!
+  const [friendsNum, setFriendsNum] = useState(0);
+
+  async function getRandomInfo() {
+    await fetch("http://localhost:5000/user/getRandomInfo/" + id).then(
+      (response) => {
+        response.json().then((x) => {
+          setFriendsNum(x.friendsNum);
+        });
+      }
+    );
+  }
+
   //addFriend button
   const [selected, setSelected] = useState(false);
   async function addRemoveFriend() {
@@ -169,6 +186,25 @@ function UserProfile() {
       alert("error: " + data.error);
     }
   }
+  //change user's Bio
+  async function changeBio() {
+    const req = await fetch("http://localhost:5000/user/changeBio", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: id,
+        bio: bio,
+      }),
+    });
+    const data = await req.json();
+    if (data.status == "changedBio") {
+      window.location.reload();
+    } else {
+      alert("error: " + data.error);
+    }
+  }
   return (
     <div id="UserProfile">
       <div id="leftSide">
@@ -176,7 +212,7 @@ function UserProfile() {
           <img
             id="userProfileImage"
             height="300px"
-            width="300px"
+            width="70%"
             src={image == "/" ? userDefaultImage : image}
           ></img>
           {screen_user_Id == id ? (
@@ -196,36 +232,88 @@ function UserProfile() {
         <div id="nameAddFriend">
           <h1>{name}</h1>
           {screen_user_Id !== id ? (
-            <ToggleButton
-              id="likeButton"
-              style={
-                selected
-                  ? {
-                      color: "#9c27b0",
-                    }
-                  : {
-                      color: "white",
-                      ":hover": {
-                        cursor: "pointer",
+            <div id="removeAddFriendDiv">
+              <ToggleButton
+                id="likeButton"
+                style={
+                  selected
+                    ? {
                         color: "#9c27b0",
-                      },
-                    }
-              }
-              color="secondary"
-              value="check"
-              selected={selected}
-              onChange={() => {
-                setSelected(!selected);
-                addRemoveFriend();
-              }}
-            >
-              <PersonAddIcon />
-            </ToggleButton>
+                      }
+                    : {
+                        color: "white",
+                        ":hover": {
+                          cursor: "pointer",
+                          color: "#9c27b0",
+                        },
+                      }
+                }
+                color="secondary"
+                value="check"
+                selected={selected}
+                onChange={() => {
+                  setSelected(!selected);
+                  addRemoveFriend();
+                }}
+              >
+                {selected == false ? <p>add friend </p> : <p>remove friend </p>}
+                <PersonAddIcon />
+              </ToggleButton>
+            </div>
           ) : (
             ""
           )}
         </div>
-        <p>{bio}</p>
+        <div id="bioSection">
+          {edittingBio == false ? (
+            <p style={{ maxWidth: "90%" }}>{bio}</p>
+          ) : (
+            <div id="bioEdittingSection">
+              {" "}
+              <textarea
+                onChange={(ev) => setBio(ev.target.value)}
+                rows="15"
+                cols="40"
+                wrap="hard"
+                maxLength="300"
+                value={bio}
+                placeholder="Change Bio"
+              ></textarea>
+              <div>
+                <button
+                  id="closeEdittingBio"
+                  onClick={() => {
+                    setEdittingBio(!edittingBio);
+                  }}
+                >
+                  X
+                </button>
+                <br />
+                <button onClick={changeBio} id="changeBio">
+                  Done
+                </button>
+              </div>
+            </div>
+          )}
+          {screen_user_Id == id && edittingBio == false ? (
+            <button
+              id="openEdittingBio"
+              onClick={() => {
+                setEdittingBio(!edittingBio);
+              }}
+            >
+              <EditIcon />
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
+        <div id="randomInfo">
+          <h3>Friends:{friendsNum} </h3>
+          <br />
+          <h3>Posts: {posts.length} </h3>
+          <br />
+        </div>
       </div>
       <div id="rightSide">
         <ul style={{ listStyle: "none" }}>
