@@ -1,163 +1,265 @@
-
-#UserProfile{
+#UserProfile {
     background-color: #161616;
-    width:100%;
-    color:white;
-    display:flex;
+    width: 100%;
+    color: white;
+    display: flex;
 
-    #leftSide{
-        -webkit-box-shadow: -2px -1px 15px 7px rgba(0,0,0,0.5);
-        -moz-box-shadow: -3px -2px 30px 14px rgba(0,0,0,0.425);
-        box-shadow: -4px -3px 45px 21px rgba(0,0,0,0.35);
-        top: 0; /* this is required for "sticky" to work */
+    #leftSide {
+
+        -webkit-box-shadow: -2px -1px 15px 7px rgba(0, 0, 0, 0.5);
+        -moz-box-shadow: -3px -2px 30px 14px rgba(0, 0, 0, 0.425);
+        box-shadow: -4px -3px 45px 21px rgba(0, 0, 0, 0.35);
+        top: 0;
+        /* this is required for "sticky" to work */
         position: sticky;
-    height:100vh;
-    width:30%;
-    border-right:2px solid #9c27b0;
-    background-color: #161616;
-    padding:20px;
-    #leftSideImage{
-        display:flex;
-        position: relative;
+        height: 100vh;
+        max-width: 30%;
+        min-width: 30%;
+        border-right: 2px solid #9c27b0;
+        background-color: #161616;
+        padding: 20px;
 
-        button{
-            background-color: #161616;
-            color:#9c27b0;
-            height:32px;
-            width:32px;
-            border:none;
-            position: absolute;
-            bottom: 0px;
-            right:0;
-            cursor:pointer;
+        #leftSideImage {
+            display: flex;
+            position: relative;
 
+            button {
+                background-color: #161616;
+                color: #9c27b0;
+                height: 32px;
+                width: 32px;
+                border: none;
+                position: absolute;
+                bottom: 0px;
+                right: 0;
+                cursor: pointer;
+
+            }
+        }
+
+        #userProfileImage {
+            border-radius: 50%;
+            margin: auto;
+            display: block;
         }
     }
-    #userProfileImage{
-        border-radius: 50%;
-        margin:auto;
-        display:block;
-    }
-    }
 }
-#changePictureWrapper{
-    #changePicture{
-        height:300px;
-        width:400px;
+
+#changePictureWrapper {
+    #changePicture {
+        height: 300px;
+        width: 400px;
         background-color: #222;
-        border:2px solid #9c27b0;
-        position:relative;
-        padding:10px;
+        border: 2px solid #9c27b0;
+        position: relative;
+        padding: 10px;
     }
+
     top:0;
     left:0;
     height:100vh;
     position:fixed;
     width:100%;
-    background-color: rgb(0,0,0,0.2);
+    background-color: rgb(0, 0, 0, 0.2);
     position: fixed;
     z-index: 1001;
     display:flex;
     justify-content: center;
     align-items: center;
-    img{
-        margin-bottom:10px;
+
+    img {
+        margin-bottom: 10px;
         border-radius: 50%;
-        height:200px;
-        width:200px;
+        height: 200px;
+        width: 200px;
     }
-    #closeForm{
+
+    #closeForm {
         background-color: #222;
         color: #9c27b0;
-        border:none;
+        border: none;
         cursor: pointer;
         position: absolute;
         top: 10px;
-        right: 10px; 
-        height:20px;
-        width:15px;
+        right: 10px;
+        height: 20px;
+        width: 15px;
     }
-    button{
+
+    button {
         background-color: #222;
         color: #9c27b0;
-        border:1px solid #9c27b0;
+        border: 1px solid #9c27b0;
         cursor: pointer;
-        height:40px;
-        transition:0.5s;
-        width:100px;
-        &:hover{
+        height: 40px;
+        transition: 0.5s;
+        width: 100px;
+
+        &:hover {
             background-color: #9c27b0;
-            border:none;
-            color:black;
+            border: none;
+            color: black;
         }
     }
 }
-#rightSide{
-     width:100%;
-    // margin-left:30%;
-    min-height:100vh;
-    margin-top:50px;
-    #posts{
-        margin-top:50px;
+
+#rightSide {
+    width: 100%;
+    min-height: 100vh;
+    margin-top: 50px;
+
+    li {
+        margin: 5px;
+
+    }
+
+    #posts {
+        margin-top: 50px;
+
     }
 }
-#nameAddFriend{
-    display:flex;
-    width:100%;
+
+#nameAddFriend {
+    display: flex;
+    width: 100%;
     justify-content: space-between;
 }
-#removeAddFriendDiv{
-    display:flex;
+
+#removeAddFriendDiv {
+    display: flex;
     align-items: center;
 }
-#bioSection{
-    margin-top:20px;
-    display:flex;
-    position:relative;
-    height:100px;
-    max-width:100%;
-    word-wrap:break-word;
-    #bioEdittingSection{
-        display:flex;
+
+#bioSection {
+    margin-top: 20px;
+    display: block;
+    position: relative;
+
+    word-wrap: break-word;
+    width: 100%;
+
+    // p {
+    //     width: 80%;
+    // }
+
+    #bioEdittingSection {
+        display: flex;
     }
-    #openEdittingBio,#closeEdittingBio{
+
+    #openEdittingBio,
+    #closeEdittingBio {
         background-color: #161616;
-        color:#9c27b0;
-        height:32px;
-        width:32px;
-        border:none;
+        color: #9c27b0;
+        height: 32px;
+        width: 32px;
+        border: none;
         position: absolute;
         bottom: 0px;
-        right:0;
-        cursor:pointer;
-        top:0;
+        right: 0;
+        cursor: pointer;
+        top: 0;
     }
-    #changeBio{
-        position:absolute;
+
+    #changeBio {
+        position: absolute;
         background-color: #161616;
-        color:#9c27b0;
-        height:32px;
-        width:32px;
-        border:none;
-        cursor:pointer;
-        right:0;
-        margin-top:20px;
-        }
-        textarea{
-            width: 100%;
-            height:100%;
-            background-color: #100f0f;
-            border: 2px solid #9c27b0;
-            color:white;
-            overflow:hidden; 
-            resize:none;
-            word-wrap:break-word
-        }
+        color: #9c27b0;
+        height: 32px;
+        width: 32px;
+        border: none;
+        cursor: pointer;
+        right: 0;
+        margin-top: 20px;
+    }
+
+    textarea {
+        width: 80%;
+        height: 100%;
+        background-color: #100f0f;
+        border: 2px solid #9c27b0;
+        color: white;
+        overflow: hidden;
+        resize: none;
+        word-wrap: break-word;
+    }
 }
-#randomInfo{
-    margin-top:20px;
+
+#randomInfo {
+    margin-top: 20px;
     background-color: #1d1d1d;
-    border:2px solid #9c27b0;
+    border: 2px solid #9c27b0;
     border-radius: 20px;
-    padding:10px;
+    padding: 10px;
+}
+
+@media screen and (max-width:750px) {
+    #UserProfile {
+        display: block;
+
+        #leftSide {
+            #leftSideInformation {
+                width: 60%;
+            }
+
+            min-width: 100%;
+            max-width: 100%;
+            display: flex;
+            height: 300px;
+            position: relative;
+            border-bottom: 2px solid #9c27b0;
+            border-right: 0px solid #9c27b0;
+            margin: 0;
+            padding: 0;
+        }
+
+        #leftSideImage {
+            width: 40%;
+            position: relative;
+
+            img {
+                position: absolute;
+                top: 50;
+                width: 110px;
+                height: 110px;
+                border-radius: 50%;
+            }
+
+        }
+
+        #bioSection {
+            margin: 0;
+            width: 80%;
+            height: 100px;
+            word-wrap: break-word;
+        }
+
+        #nameAddFriend {
+            width: 70%;
+            margin: 0;
+            display: flex;
+            margin-top: 20px;
+
+        }
+
+        #randomInfo {
+            width: 100%;
+            background-color: #1d1d1d;
+            border: 2px solid #9c27b0;
+            border-radius: 20px;
+            width: 70%;
+            margin: 0;
+            margin-top: 20px;
+            font-size: 12px;
+
+        }
+
+
+
+    }
+
+    // #rightSide {
+    //     width: 100vw;
+    // }
+
+
 }

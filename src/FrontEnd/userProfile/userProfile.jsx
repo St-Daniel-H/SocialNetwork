@@ -8,7 +8,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import EditIcon from "@mui/icons-material/Edit";
 import ToggleButton from "@mui/material/ToggleButton";
-
+import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 function ChangePicture({ trigger, setTrigger, image, setImage, id }) {
   const [file, setFile] = useState("");
   console.log(`image passed as parameter: ${image}`);
@@ -207,7 +207,7 @@ function UserProfile() {
   }
   return (
     <div id="UserProfile">
-      <div id="leftSide">
+      <div id="leftSide" style={{ width: "30%" }}>
         <div id="leftSideImage">
           <img
             id="userProfileImage"
@@ -228,91 +228,97 @@ function UserProfile() {
             ""
           )}
         </div>
+        <div id="leftSideInformation">
+          <div id="nameAddFriend">
+            <h1>{name}</h1>
+            {screen_user_Id !== id ? (
+              <div id="removeAddFriendDiv">
+                <ToggleButton
+                  sx={{
+                    height: 20,
 
-        <div id="nameAddFriend">
-          <h1>{name}</h1>
-          {screen_user_Id !== id ? (
-            <div id="removeAddFriendDiv">
-              <ToggleButton
-                id="likeButton"
-                style={
-                  selected
-                    ? {
-                        color: "#9c27b0",
-                      }
-                    : {
-                        color: "white",
-                        ":hover": {
-                          cursor: "pointer",
+                    color: "success.main",
+                  }}
+                  id="likeButton"
+                  style={
+                    selected
+                      ? {
                           color: "#9c27b0",
-                        },
-                      }
-                }
-                color="secondary"
-                value="check"
-                selected={selected}
-                onChange={() => {
-                  setSelected(!selected);
-                  addRemoveFriend();
-                }}
-              >
-                {selected == false ? <p>add friend </p> : <p>remove friend </p>}
-                <PersonAddIcon />
-              </ToggleButton>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-        <div id="bioSection">
-          {edittingBio == false ? (
-            <p style={{ maxWidth: "90%" }}>{bio}</p>
-          ) : (
-            <div id="bioEdittingSection">
-              {" "}
-              <textarea
-                onChange={(ev) => setBio(ev.target.value)}
-                rows="15"
-                cols="40"
-                wrap="hard"
-                maxLength="300"
-                value={bio}
-                placeholder="Change Bio"
-              ></textarea>
-              <div>
-                <button
-                  id="closeEdittingBio"
-                  onClick={() => {
-                    setEdittingBio(!edittingBio);
+                        }
+                      : {
+                          color: "white",
+                          ":hover": {
+                            cursor: "pointer",
+                            color: "#9c27b0",
+                          },
+                        }
+                  }
+                  color="secondary"
+                  value="check"
+                  selected={selected}
+                  onChange={() => {
+                    setSelected(!selected);
+                    addRemoveFriend();
                   }}
                 >
-                  X
-                </button>
-                <br />
-                <button onClick={changeBio} id="changeBio">
-                  Done
-                </button>
+                  {selected == false ? <PersonAddIcon /> : <PersonRemoveIcon />}
+                </ToggleButton>
               </div>
-            </div>
-          )}
-          {screen_user_Id == id && edittingBio == false ? (
-            <button
-              id="openEdittingBio"
-              onClick={() => {
-                setEdittingBio(!edittingBio);
-              }}
-            >
-              <EditIcon />
-            </button>
-          ) : (
-            ""
-          )}
-        </div>
-        <div id="randomInfo">
-          <h3>Friends:{friendsNum} </h3>
-          <br />
-          <h3>Posts: {posts.length} </h3>
-          <br />
+            ) : (
+              ""
+            )}
+          </div>
+          <div id="bioSection">
+            {edittingBio == false ? (
+              <p style={{ maxWidth: "80%" }}>{bio}</p>
+            ) : (
+              <div id="bioEdittingSection">
+                {" "}
+                <textarea
+                  onChange={(ev) => setBio(ev.target.value)}
+                  rows="7"
+                  cols="20"
+                  wrap="hard"
+                  maxLength="150"
+                  value={bio}
+                  placeholder="Change Bio"
+                ></textarea>
+                <div>
+                  <button
+                    id="closeEdittingBio"
+                    onClick={() => {
+                      setEdittingBio(!edittingBio);
+                    }}
+                  >
+                    X
+                  </button>
+                  <br />
+                  <button onClick={changeBio} id="changeBio">
+                    Done
+                  </button>
+                </div>
+              </div>
+            )}
+            {screen_user_Id == id && edittingBio == false ? (
+              <button
+                id="openEdittingBio"
+                onClick={() => {
+                  setEdittingBio(!edittingBio);
+                }}
+              >
+                <EditIcon />
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
+
+          <div id="randomInfo">
+            <h3>Friends:{friendsNum} </h3>
+            <br />
+            <h3>Posts: {posts.length} </h3>
+            <br />
+          </div>
         </div>
       </div>
       <div id="rightSide">
