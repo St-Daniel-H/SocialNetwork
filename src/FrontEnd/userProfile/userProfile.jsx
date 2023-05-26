@@ -213,7 +213,9 @@ function UserProfile() {
             id="userProfileImage"
             height="300px"
             width="70%"
-            src={image == "/" ? userDefaultImage : image}
+            src={
+              image == "/" || image == "/undefined" ? userDefaultImage : image
+            }
           ></img>
           {screen_user_Id == id ? (
             <button

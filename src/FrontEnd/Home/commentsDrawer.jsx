@@ -122,7 +122,11 @@ function CommentSection({
                 id="userImageComment"
                 height="32"
                 width="32"
-                src={userImage == "" ? userDefaultImage : "/" + userImage}
+                src={
+                  userImage == "" || userImage == undefined
+                    ? userDefaultImage
+                    : "/" + userImage
+                }
               ></img>
               <div id="NameAndComment">
                 <p>{name}</p>

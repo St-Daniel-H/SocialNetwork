@@ -158,7 +158,7 @@ function Posts({
       <div id="postUserInfo">
         <img
           id="PosterImage"
-          src={image == "/" ? userDefaultImage : image}
+          src={image == "/undefined" || image == "/" ? userDefaultImage : image}
         ></img>
 
         <div id="posterNameAndDate">

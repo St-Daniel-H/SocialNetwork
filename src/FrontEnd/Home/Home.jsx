@@ -197,7 +197,11 @@ const homePage = () => {
             <div id="profile">
               <img
                 id="userImageAtTopBar"
-                src={profilePicture == "" ? userDefaultImage : profilePicture}
+                src={
+                  profilePicture == undefined
+                    ? userDefaultImage
+                    : profilePicture
+                }
               ></img>
               <Link to={"/user/" + userId}>
                 <p>{name || "no name found"}</p>

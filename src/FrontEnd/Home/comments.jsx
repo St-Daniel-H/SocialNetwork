@@ -92,7 +92,7 @@ function Comment({
             id="commentSectionImage"
             height="32"
             width="32"
-            src={image == "/" ? userDefaultImage : image}
+            src={image == "/undefined" ? userDefaultImage : image}
           ></img>
           <div id="namemessageBlock" style={{ display: "block" }}>
             <div id="NameAndTime">
